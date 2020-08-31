@@ -3,7 +3,7 @@
 //  uobei
 //
 //  Created by 東竜生 on 2019/12/07.
-//  Copyright © 2019年 東竜生. All rights reserved.
+//  Copyright © 2019年 東竜生.佐藤 All rights reserved.
 //
 
 import UIKit
