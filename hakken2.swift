@@ -13,6 +13,7 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     var flag:[Bool] = [false,false,false]
     
     
+    
     //viewの設定
     func viewSetting(SViewController:UIViewController){
         //アニメーションを設定する.
@@ -22,22 +23,10 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         self.present(SViewController, animated: true, completion: nil)
     }
  
-    //グローバルにする必要ある
-    var audioPlayerInstance : AVAudioPlayer! = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let soundFilePath = Bundle.main.path(forResource: "\(appDelegate.sound_num)", ofType: "mp3")!
-        let sound:URL = URL(fileURLWithPath: soundFilePath)
-        
-        do {
-            audioPlayerInstance = try AVAudioPlayer(contentsOf: sound, fileTypeHint:nil)
-        } catch {
-            print("AVAudioPlayerインスタンス作成でエラー")
-        }
-        // 再生準備
         audioPlayerInstance.prepareToPlay()
-        audioPlayerInstance.volume = appDelegate.touch_volume
+        
         // UIImageViewを作成する.
         myImageView = UIImageView(frame: CGRect(x: 0,y: 0,width: 1024,height: 768))
         myImageView.image = UIImage(ciImage: myInputImage!)
@@ -64,6 +53,10 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                   }
               }
         
+        self.view.addSubview(button.make(xv:215,yv:440,wv:365,hv:100,f:50,b:"カウンター",c:16,d:1,e:0,m:1))
+        self.view.addSubview(button.make(xv:595,yv:440,wv:365,hv:100,f:50,b:"テーブル",c:17,d:1,e:0,m:1))
+        self.view.addSubview(button.make(xv:215,yv:570,wv:745,hv:100,f:50,b:"発券",c:18,d:1,e:0,m:1))
+        self.view.addSubview(button.make(xv:40,yv:710,wv:100,hv:50,f:50,b:"戻る",c:19,d:1,e:0,m:1))
         //マスク用label上段
         if appDelegate.maskFlag != 100 {
             self.view.addSubview(label.make(xv:215 + (appDelegate.maskFlag*95),yv:180,wv:80,hv:80,f:50,o:0,o1:2,o2:0.3, ic: ""))
@@ -76,10 +69,7 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         if appDelegate.maskFlag3 != 100 {
             self.view.addSubview(label.make(xv:215 + (appDelegate.maskFlag3*380),yv:440,wv:365,hv:100,f:50,o:0,o1:2,o2:0.3, ic: ""))
         }
-        self.view.addSubview(button.make(xv:215,yv:440,wv:365,hv:100,f:50,b:"カウンター",c:16,d:1,e:0,m:1))
-        self.view.addSubview(button.make(xv:595,yv:440,wv:365,hv:100,f:50,b:"テーブル",c:17,d:1,e:0,m:1))
-        self.view.addSubview(button.make(xv:215,yv:570,wv:745,hv:100,f:50,b:"発券",c:18,d:1,e:0,m:1))
-        self.view.addSubview(button.make(xv:40,yv:710,wv:100,hv:50,f:50,b:"戻る",c:19,d:1,e:0,m:1))
+        
         
         
         func didReceiveMemoryWarning() {
@@ -145,8 +135,17 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 appDelegate.maskFlag3 = 100
                 let SViewController: UIViewController = first()
                 viewSetting(SViewController: SViewController)
+                audioPlayerInstance.play()
             }else{
-                print("ポップアップ表示")
+                let ngalert = UIAlertController(title: "未入力があります", message: "", preferredStyle: .alert)
+                ngalert.view.setNeedsLayout() // シミュレータの種類によっては、これがないと警告が発生
+                // アラート表示
+                self.present(ngalert, animated: true, completion: {
+                    // アラートを閉じる
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                    ngalert.dismiss(animated: true, completion: nil)
+                    })
+                })
                 break
             }
 
