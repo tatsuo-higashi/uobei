@@ -29,7 +29,7 @@ class Call: UIViewController {
 //            let qrc = makeQrcode()
 //            self.view.addSubview(qrc.make(sum: appDelegate.qr_string))
         }
-        
+
         //ボタン作成メソッド
         func makeButton(xv:Int,yv:Int,wv:Int,hv:Int,f:Int,b:String,c:Int){
             let button: UIButton = UIButton(frame: CGRect(x:CGFloat(xv), y:CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
@@ -103,53 +103,29 @@ class Call: UIViewController {
         self.view.layer.render(in: context)
         let capturedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        
         return capturedImage
     }
     
     @objc internal func selection(sender: UIButton){
-        let view = makeView()
+        let view = viewSetting()
         switch sender.tag{
-           
-            case 2:
-                let SViewController: UIViewController = ViewController()
-                //アニメーションを設定する.
-                SViewController.modalTransitionStyle = .flipHorizontal
-                //Viewの移動する.
-                SViewController.modalPresentationStyle = .fullScreen
-                self.present(SViewController, animated: true, completion: nil)
-                //audioPlayerInstance.play()
-            case 3://テイクアウト
-                print("ok3")
-            case 4://注文履歴
-                print("ok4")
-            case 5://店員呼び出し
-                print("ok5")
-            case 6:
-                print("ok6")
-            case 7:
-                print("ok7")
-            case 8:
-                print("ok8")
-            case 9:
-                print("ok9")
-            case 10:
-                print("ok10")
-            case 11:
-                print("ok11")
-            case 12:
+            
+            case 0:
                 addTimer.invalidate()
-                let SViewController: UIViewController = Call()
-                //アニメーションを設定する.
-                SViewController.modalTransitionStyle = .flipHorizontal
-                //Viewの移動する.
-                SViewController.modalPresentationStyle = .fullScreen
-                self.present(SViewController, animated: true, completion: nil)
-                self.view.addSubview(view.make())
-            case 22://動画再生中のタップ
+                self.present(view.viewSet(view: Call(), anime: .flipHorizontal), animated: false, completion: nil)
+                audioPlayerInstance.play()
+                // UIImageViewを作成.
+               let imageView = UIImageView(frame: CGRect(x:CGFloat(0), y: CGFloat(0), width: CGFloat(550), height: CGFloat(700)))
+               // 画像をUIImageViewに設定する.
+                imageView.image = UIImage(named: "call.jpeg")!
+                self.view.addSubview(imageView)
+            case 1://動画再生中のタップ
                 addTimer.invalidate()
                 loadView()//videoplayerを破棄 画面遷移なしで
                 viewDidLoad()
+            case 2:
+                self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
+                audioPlayerInstance.play()
             default:break
         }
     }

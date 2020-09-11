@@ -31,14 +31,7 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         // タイマーを無効にする
         addTimer.invalidate()
     }
-    //viewの設定
-    func viewSetting(SViewController:UIViewController){
-        //アニメーションを設定する.
-        SViewController.modalTransitionStyle = .flipHorizontal
-        //Viewの移動する.
-        SViewController.modalPresentationStyle = .fullScreen
-        self.present(SViewController, animated: true, completion: nil)
-    }
+
     //画像の設定
     func imageSetteng(picture:String){
         // 画像を設定する.
@@ -209,17 +202,20 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     
     //ボタンイベント処理
     @objc func celection(sender: UIButton){
+        let view = viewSetting()
         switch sender.tag{
         case 1://戻ボタン
-            let SViewController: UIViewController = ViewController()
-            viewSetting(SViewController: SViewController)
+            self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
+            audioPlayerInstance.play()
         case 2:// 一種類目+ボタン
             i = 0
             if appDelegate.box[i].qty < 4{
                 appDelegate.box[i].qty =  appDelegate.box[i].qty+1
                 viewDidLoad()
+                audioPlayerInstance.play()
             }else if appDelegate.box[i].qty == 4{
                 imageSetteng(picture: "over.jpg")
+                audioPlayerInstance.play()
                 // タイマーの設定（5秒間隔でメソッド「timerCall」を呼び出す）
                 addTimer =  Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
             }
@@ -229,13 +225,16 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 appDelegate.box[i].qty =  appDelegate.box[i].qty-1
             }
             viewDidLoad()
+            audioPlayerInstance.play()
         case 4:// 2種類目+ボタン
             i = 1
             if appDelegate.box[i].qty < 4{
                 appDelegate.box[i].qty =  appDelegate.box[i].qty+1
                 viewDidLoad()
+                audioPlayerInstance.play()
             }else if appDelegate.box[i].qty == 4{
                 imageSetteng(picture: "over.jpg")
+                audioPlayerInstance.play()
                 // タイマーの設定（5秒間隔でメソッド「timerCall」を呼び出す）
                 addTimer =  Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
             }
@@ -245,13 +244,16 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 appDelegate.box[i].qty =  appDelegate.box[i].qty-1
             }
             viewDidLoad()
+            audioPlayerInstance.play()
         case 6:// 3種類目+ボタン
             i = 2
             if appDelegate.box[i].qty < 4{
                 appDelegate.box[i].qty =  appDelegate.box[i].qty+1
                 viewDidLoad()
+                audioPlayerInstance.play()
             }else if appDelegate.box[i].qty == 4{
                 imageSetteng(picture: "over.jpg")
+                audioPlayerInstance.play()
                 // タイマーの設定（5秒間隔でメソッド「timerCall」を呼び出す）
                 addTimer =  Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
             }
@@ -261,6 +263,7 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 appDelegate.box[i].qty =  appDelegate.box[i].qty-1
             }
             viewDidLoad()
+            audioPlayerInstance.play()
         case 13://商品名(1段目)
             i = 0
             appDelegate.count_t[0].now = "on"
@@ -282,7 +285,6 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         case 18://注文
             appDelegate.dishSum += appDelegate.box[0].qty + appDelegate.box[1].qty + appDelegate.box[2].qty
             appDelegate.qr_string = "注文は\(appDelegate.dishSum)皿で会計金額は\(appDelegate.dishSum * 110)円です"
-            
             for i in 0...2{
                 if "\(appDelegate.box[i].name)" != ""{
                     let history = (name:"\(appDelegate.box[i].name)", num:appDelegate.box[i].qty)
@@ -300,10 +302,10 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             appDelegate.count_t = [(0,""),(0,""),(0,"")]
             appDelegate.box = [("",0,"kara.png"),("",0,"kara.png"),("",0,"kara.png")]
             i = 0
+            audioPlayerInstance.play()
             //遅延処理
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                let SViewController: UIViewController = ViewController()
-                self.viewSetting(SViewController: SViewController)
+                self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
             }
         default:break
         }

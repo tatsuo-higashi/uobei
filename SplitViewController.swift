@@ -9,7 +9,6 @@ extension Section2 {
     static func make() -> [Section] {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let realm = try! Realm()
-        let obj = realm.objects(guestData.self).last
         switch appDelegate.view_setting{
         case "アカウント":
             return[Section(title: "アカウント", items: ["席番号", "到着時間"])]//sections[0].count=1
@@ -365,10 +364,7 @@ extension SplitViewController: UITableViewDataSource {
                            generationLabel.textColor = colorArray[i]
                            cell.accessoryView = generationLabel
                        }
-                      
-                                       
                    }
-            
                    super.viewWillAppear(true)
                    let pieChartView = PieChartView()
 
@@ -449,29 +445,21 @@ extension SplitViewController: UITableViewDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         tableView.isScrollEnabled = true
-        //view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
         super.viewWillAppear(animated)
     }
     
     @objc func dateChanged(_ sender: UIDatePicker) {
-        print("ちゃん来てる")
     }
     //doneタップ時
     @objc func doneBarButtonTapped(_ sender: UIBarButtonItem) {
-        let SViewController: UIViewController = ViewController()
-        //アニメーションを設定する.
-        SViewController.modalTransitionStyle = .flipHorizontal
-        //Viewの移動する.
-        SViewController.modalPresentationStyle = .fullScreen
-        self.present(SViewController, animated: true, completion: nil)
+        let view = viewSetting()
+        self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
+        audioPlayerInstance.play()
     }
     @objc func sliderDidEndSliding_t(_ sender: UISlider) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        print("end sliding")
-        print("タッチ音sliderの値:",sender.value)
         appDelegate.touch_volume = sender.value
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
-        //　Storyboardを指定
         // rootViewControllerに入れる
         appDelegate.window?.rootViewController = Test()
         // 表示
@@ -479,8 +467,6 @@ extension SplitViewController: UITableViewDelegate {
     }
     @objc func sliderDidEndSliding_m(_ sender: UISlider) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        print("end sliding")
-        print("スクリーンセーバーsliderの値:",sender.value)
         appDelegate.movie_volume = sender.value
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         //　Storyboardを指定
@@ -495,10 +481,8 @@ extension SplitViewController: UITableViewDelegate {
         switch sender.tag{
         case 0://バーコードの値が変わった時
             if appDelegate.qr_sta == "qr"{
-                print("二次元コードはバーコードを選択")
                 appDelegate.qr_sta = "bc"
             }else{
-                print("二次元コードはQRコードを選択")
                 appDelegate.qr_sta = "qr"
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
@@ -509,14 +493,12 @@ extension SplitViewController: UITableViewDelegate {
             appDelegate.window?.makeKeyAndVisible()
         case 1://QRコードの値が変わった時
             if appDelegate.qr_sta == "qr"{
-                print("二次元コードはバーコードを選択")
                 appDelegate.qr_sta = "bc"
             }else{
-                print("二次元コードはQRコードを選択")
                 appDelegate.qr_sta = "qr"
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
-            //　Storyboardを指定
+           
             // rootViewControllerに入れる
             appDelegate.window?.rootViewController = Test()
             // 表示
@@ -524,10 +506,8 @@ extension SplitViewController: UITableViewDelegate {
         case 2://サウンドON-OFFのタッチ音値が変わった時
             if appDelegate.touch_volume == 0{
                 appDelegate.touch_volume = 0.5
-                print("タッチ音量を初期化")
             }else{
                 appDelegate.touch_volume = 0.0
-                print("タッチ音量を0に設定")
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
@@ -538,16 +518,11 @@ extension SplitViewController: UITableViewDelegate {
         case 3://サウンドON-OFFのスクリーン音値が変わった時
             if appDelegate.movie_volume == 0{
                 appDelegate.movie_volume = 0.5
-                print("スクリーンセーバ音量を初期化")
             }else{
                 appDelegate.movie_volume = 0.0
-                print("スクリーンセーバ音量を0に設定")
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
-            //　Storyboardを指定
-            // rootViewControllerに入れる
             appDelegate.window?.rootViewController = Test()
-            // 表示
             appDelegate.window?.makeKeyAndVisible()
         default:break
         }

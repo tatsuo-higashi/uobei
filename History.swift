@@ -89,31 +89,18 @@ class History: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     }
     
     @objc func selection(sender: UIButton){
+        let view = viewSetting()
         switch sender.tag{
         case 0:
-            let SViewController: UIViewController = ViewController()
-            //アニメーションを設定する.
-            SViewController.modalTransitionStyle = .flipHorizontal
-            //Viewの移動する.
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
+            self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
+            audioPlayerInstance.play()
         case 1:
-            let SViewController: UIViewController = Reception()
-            //アニメーションを設定する.
-            SViewController.modalTransitionStyle = .flipHorizontal
-            //Viewの移動する.
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
+            self.present(view.viewSet(view: Reception(), anime: .flipHorizontal), animated: false, completion: nil)
+            audioPlayerInstance.play()
         case 2:
             //githubで更新テスト用S
-            let SViewController: UIViewController = Reception()
-            //アニメーションを設定する.
-            SViewController.modalTransitionStyle = .flipHorizontal
-            //Viewの移動する.
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
-        case 7:
-            print("プラスを押した")
+            self.present(view.viewSet(view: Reception(), anime: .flipHorizontal), animated: false, completion: nil)
+            audioPlayerInstance.play()
         default:break
         }
     }

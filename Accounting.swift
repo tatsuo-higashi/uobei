@@ -13,16 +13,6 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     var timerCount = 0
     var flag:[Bool] = [false,false,false]
     
-    
-    
-    //viewの設定
-    func viewSetting(SViewController:UIViewController){
-        //アニメーションを設定する.
-        SViewController.modalTransitionStyle = .flipHorizontal
-        //Viewの移動する.
-        SViewController.modalPresentationStyle = .fullScreen
-        self.present(SViewController, animated: true, completion: nil)
-    }
  
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +71,7 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     }
 
     @objc func selection(sender: UIButton){
+        let view = viewSetting()
         if sender.tag <= 7 {
             k = sender.tag
             let realm = try! Realm()
@@ -135,8 +126,7 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 appDelegate.maskFlag = 100
                 appDelegate.maskFlag2 = 100
                 appDelegate.maskFlag3 = 100
-                let SViewController: UIViewController = First()
-                viewSetting(SViewController: SViewController)
+                self.present(view.viewSet(view: First(), anime: .flipHorizontal), animated: false, completion: nil)
                 audioPlayerInstance.play()
             }else{
                 let ngalert = UIAlertController(title: "未入力があります", message: "", preferredStyle: .alert)
@@ -158,8 +148,7 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             appDelegate.maskFlag = 100
             appDelegate.maskFlag2 = 100
             appDelegate.maskFlag3 = 100
-            let SViewController: UIViewController = Ticket()
-            viewSetting(SViewController: SViewController)
+            self.present(view.viewSet(view: Ticket(), anime: .flipHorizontal), animated: false, completion: nil)
         default:break
         }
     }

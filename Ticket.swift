@@ -16,14 +16,8 @@ class Ticket: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     let myInputImage = CIImage(image: UIImage(named: "kara")!)
     var addTimer = Timer()
     var timerCount = 0
-    //viewの設定
-    func viewSetting(SViewController:UIViewController){
-        //アニメーションを設定する.
-        SViewController.modalTransitionStyle = .flipHorizontal
-        //Viewの移動する.
-        SViewController.modalPresentationStyle = .fullScreen
-        self.present(SViewController, animated: true, completion: nil)
-    }
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let soundFilePath = Bundle.main.path(forResource: "\(appDelegate.sound_num)", ofType: "mp3")!
@@ -109,15 +103,13 @@ class Ticket: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         }
     }
     @objc func selection(sender: UIButton){
+        let view = viewSetting()
         switch sender.tag{
         case 1:
-            let SViewController: UIViewController = Accounting()
-            viewSetting(SViewController: SViewController)
+            self.present(view.viewSet(view: Accounting(), anime: .flipHorizontal), animated: false, completion: nil)
             audioPlayerInstance.play()
-            
         case 2:
-            let SViewController: UIViewController = Camera()
-            viewSetting(SViewController: SViewController)
+            self.present(view.viewSet(view: Camera(), anime: .flipHorizontal), animated: false, completion: nil)
             audioPlayerInstance.play()
         default:break
         }

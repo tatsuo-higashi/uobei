@@ -212,6 +212,7 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     
     //ボタンイベント
     @objc func selection(sender: UIButton){
+        let view = viewSetting()
         if sender.tag <= 10 {
             k = sender.tag
         }
@@ -232,10 +233,8 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                        inputNum = tenkeyHandle(inputNum: inputNum)
                        audioPlayerInstance.play()
         case 20://戻るボタン
-            let SViewController: UIViewController = ViewController()
-            SViewController.modalTransitionStyle = .flipHorizontal
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
+            self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
+            audioPlayerInstance.play()
         case 21://Enter
             if inputNum == ""{break}
             let value = Int(inputNum.replacingOccurrences(of: ",", with: ""))! - (appDelegate.dishSum * 110)
@@ -296,25 +295,21 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             }
             let allObj = realm.objects(allData.self).last
             try! realm.write{
-                allObj?.inTime = obj?.inTime as! String
-                allObj?.outTime = obj?.outTime as! String
-                allObj?.adultCount = obj?.adultCount as! String
-                allObj?.childCount = obj?.childCount as! String
-                allObj?.dish = obj?.dish as! Int
+                allObj?.inTime = obj!.inTime
+                allObj?.outTime = obj!.outTime
+                allObj?.adultCount = obj!.adultCount
+                allObj?.childCount = obj!.childCount
+                allObj?.dish = obj!.dish
                 allObj?.generation = generation
-                allObj?.seatNum = obj?.seatNum as! String
-                allObj?.seatType = obj?.seatType as! String
+                allObj?.seatNum = obj!.seatNum
+                allObj?.seatType = obj!.seatType
             }
             appDelegate.geneMaskFlag = 100
             appDelegate.history = []
+            audioPlayerInstance.play()
             //遅延
             DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                let SViewController: UIViewController = Ticket()
-                //アニメーションを設定する.
-                SViewController.modalTransitionStyle = .flipHorizontal
-                //Viewの移動する.
-                SViewController.modalPresentationStyle = .fullScreen
-                self.present(SViewController, animated: true, completion: nil)
+                self.present(view.viewSet(view: Ticket(), anime: .flipHorizontal), animated: false, completion: nil)
             }
         case 22:
                        //✗

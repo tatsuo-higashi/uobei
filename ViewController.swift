@@ -28,7 +28,6 @@ class ViewController: UIViewController ,selection{
         
         //クラスをインスタンス化
         let button = makeButton()//m:backgrand,e:picture,e:border
-        let label = makeLabel()//o:border,o1:backgrand,o2:0でalpha無効,ic:300でむテキスト無効
         let launchViewController: UIViewController = Test()
         audioPlayerInstance.prepareToPlay()
         self.addChild(launchViewController)  // 子ViewのViewControllerを指定
@@ -38,8 +37,6 @@ class ViewController: UIViewController ,selection{
         myImageView.image = UIImage(ciImage: myInputImage!)
         self.view.addSubview(myImageView)
         
-
-
         self.view.addSubview(button.make(xv:80,yv:170,wv:280,hv:180,f:20,b:"set",c:0,t:0))
         self.view.addSubview(button.make(xv:380,yv:170,wv:280,hv:180,f:20,b:"ikura",c:1,t:0))
         self.view.addSubview(button.make(xv:680,yv:170,wv:280,hv:180,f:20,b:"osusume",c:2,t:0))
@@ -78,7 +75,6 @@ class ViewController: UIViewController ,selection{
     }
     
     @objc func playMovieFromBundleFile() {
-       print("playMovieFromBundleFile")
         let bundleDataName: String = "\(appDelegate.movie_num)"
         let bundleDataType: String = "mp4"
         
@@ -91,12 +87,10 @@ class ViewController: UIViewController ,selection{
     }
     
     @objc func play(){
-        print("play")
         //これでタイマー切
         addTimer.invalidate()
         
         // パスからassetを生成.
-   
         let path = Bundle.main.path(forResource:  "\(appDelegate.movie_num)", ofType: "mp4")
         let fileURL = NSURL(fileURLWithPath: path!)
         let avAsset = AVAsset(url: fileURL as URL)
@@ -164,71 +158,48 @@ class ViewController: UIViewController ,selection{
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
         //透明なボタンを作ってタップを反応させる
         let button: UIButton = UIButton(frame: CGRect(x:CGFloat(0), y:CGFloat(0), width: CGFloat(1024), height: CGFloat(768)))
-        button.tag = 22
+        button.tag = 20
         button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
         self.view.addSubview(button)
         videoPlayer.play()
     }
     
     @objc func playerDidFinishPlaying(notification: NSNotification) {
-     play()
+        play()
     }
 
     @objc func selection(sender: UIButton){
-        print("menu")
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let view = viewSetting()
         if sender.tag <= 8{
             k = sender.tag
         }
         switch sender.tag{
-        case 10:
-            addTimer.invalidate()
-            appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
-            //　Storyboardを指定
-            // rootViewControllerに入れる
-            appDelegate.window?.rootViewController = Test()
-            // 表示
-            appDelegate.window?.makeKeyAndVisible()
-            //let SViewController: UIViewController = MasterViewController()
-            //アニメーションを設定する.
-            //SViewController.modalTransitionStyle = .flipHorizontal
-            //Viewの移動する.
-            //self.present(SViewController, animated: true, completion: nil)
-            //audioPlayerInstance.play()
-        case 11:
-            addTimer.invalidate()
-            let SViewController: UIViewController = History()
-            //アニメーションを設定する.
-            SViewController.modalTransitionStyle = .flipHorizontal
-            //Viewの移動する.
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
-        case 12:
-            addTimer.invalidate()
-            let SViewController: UIViewController = Call()
-            //アニメーションを設定する.
-            SViewController.modalTransitionStyle = .flipHorizontal
-            //Viewの移動する.
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
-            //self.view.addSubview(view.make())
-            //self.view.addSubview(qrc.make())
-        case 22://動画再生中のタップ
-            addTimer.invalidate()
-            loadView()//videoplayerを破棄 画面遷移なしで
-            viewDidLoad()
-        case k://メニュー
-            appDelegate.choise = k
-            addTimer.invalidate()
-            let SViewController: UIViewController = Menu()
-            //アニメーションを設定する.
-            SViewController.modalTransitionStyle = .flipHorizontal
-            //Viewの移動する.
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
-            // 再生準備
-            audioPlayerInstance.play()
-        default:break
+            case 10:
+                addTimer.invalidate()
+                appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+                appDelegate.window?.rootViewController = Test()
+                appDelegate.window?.makeKeyAndVisible()
+                audioPlayerInstance.play()
+            case 11:
+                addTimer.invalidate()
+                self.present(view.viewSet(view: History(), anime: .flipHorizontal), animated: false, completion: nil)
+                audioPlayerInstance.play()
+            case 12:
+                addTimer.invalidate()
+                self.present(view.viewSet(view: Call(), anime: .flipHorizontal), animated: false, completion: nil)
+                audioPlayerInstance.play()
+            case 20://動画再生中のタップ
+                addTimer.invalidate()
+                loadView()//videoplayerを破棄 画面遷移なしで
+                viewDidLoad()
+                audioPlayerInstance.play()
+            case k://メニュー
+                appDelegate.choise = k
+                addTimer.invalidate()
+                self.present(view.viewSet(view: Menu(), anime: .flipHorizontal), animated: false, completion: nil)
+                audioPlayerInstance.play()
+            default:break
         }
     }
     override func viewDidAppear(_ animated: Bool){

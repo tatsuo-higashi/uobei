@@ -101,6 +101,7 @@ class First: UIViewController {
         play()
     }
     @objc func selection(sender: UIButton){
+        let view = viewSetting()
         switch sender.tag{
             case 0:
                 let date = Date()
@@ -110,12 +111,7 @@ class First: UIViewController {
                 try! realm.write {
                     obj?.inTime = dateAndTime
                 }
-                let SViewController: UIViewController = ViewController()
-                //アニメーションを設定する.
-                SViewController.modalTransitionStyle = .flipHorizontal
-                //Viewの移動する.
-                SViewController.modalPresentationStyle = .fullScreen
-                self.present(SViewController, animated: true, completion: nil)
+                self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
                 audioPlayerInstance.play()
             default:break
         }

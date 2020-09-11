@@ -45,14 +45,7 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         // タイマーを無効にする
         addTimer.invalidate()
     }
-    //viewの設定
-    func viewSetting(SViewController:UIViewController){
-        //アニメーションを設定する.
-        SViewController.modalTransitionStyle = .flipHorizontal
-        //Viewの移動する.
-        SViewController.modalPresentationStyle = .fullScreen
-        self.present(SViewController, animated: true, completion: nil)
-    }
+    
     //メソッド終わり
     
     override func viewDidLoad() {
@@ -76,10 +69,10 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             self.view.addSubview(button.make(xv:30+(220*d)-(660*e),yv:225+(220*e),wv:200,hv:200,f:20,b:appDelegate.data[tag_flag1][appDelegate.tag_flag2][d].pic,c:0+d,d:0,e:1,m:0))
         }
         //共通ボタン作成
-        self.view.addSubview(button.make(xv:30,yv:700,wv:100,hv:50,f:50,b:"戻る",c:6,d:1,e:0,m:1))
-        self.view.addSubview(button.make(xv:950,yv:290,wv:60,hv:60,f:50,b:"➕",c:7,d:1,e:0,m:1))
-        self.view.addSubview(button.make(xv:790,yv:290,wv:60,hv:60,f:50,b:"➖",c:8,d:1,e:0,m:1))
-        self.view.addSubview(button.make(xv:650,yv:700,wv:100,hv:50,f:50,b:"注文",c:9,d:1,e:0,m:1))
+        self.view.addSubview(button.make(xv:30,yv:700,wv:100,hv:50,f:50,b:"戻る",c:50,d:1,e:0,m:1))
+        self.view.addSubview(button.make(xv:950,yv:290,wv:60,hv:60,f:50,b:"➕",c:51,d:1,e:0,m:1))
+        self.view.addSubview(button.make(xv:790,yv:290,wv:60,hv:60,f:50,b:"➖",c:52,d:1,e:0,m:1))
+        self.view.addSubview(button.make(xv:650,yv:700,wv:100,hv:50,f:50,b:"注文",c:53,d:1,e:0,m:1))
         //商品名（1段目)
         if appDelegate.box[0].name == ""{
         }else{
@@ -161,6 +154,7 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     //ボタンイベント処理
     @objc func selection(sender: UIButton){
         let label = makeLabel()//o:border,o1:backgrand,o2:alpha
+        let view = viewSetting()
         let tag_flag1 = appDelegate.choise
         if sender.tag<=5{
             k = sender.tag
@@ -177,17 +171,14 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             loadView()
             viewDidLoad()
             audioPlayerInstance.play()
-        case 4:
-            let SViewController: UIViewController = Order()
-            viewSetting(SViewController: SViewController)
-            audioPlayerInstance.play()
-        case 6://戻る
+        case 50://戻る
             //tag2の初期化
             appDelegate.tag_flag2 = 0
             self.dismiss(animated: false, completion: nil)
             loadView()
             viewDidLoad()
-        case 7:// +ボタン
+            audioPlayerInstance.play()
+        case 51:// +ボタン
             if appDelegate.box[appDelegate.i].qty < 4{
                 appDelegate.box[appDelegate.i].qty =  appDelegate.box[appDelegate.i].qty+1
                 viewDidLoad()
@@ -201,20 +192,22 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 myImageView = UIImageView(frame: UIScreen.main.bounds)
                 myImageView.image = UIImage(ciImage: myInputImage!)
                 self.view.addSubview(myImageView)
+                audioPlayerInstance.play()
                 // タイマーの設定（5秒間隔でメソッド「timerCall」を呼び出す）
                 addTimer =  Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
+                
             }
-        case 8:// −ボタン
+        case 52:// −ボタン
             if  appDelegate.box[appDelegate.i].qty != 0  && appDelegate.box[appDelegate.i].qty > 0{
                 appDelegate.box[appDelegate.i].qty =  appDelegate.box[appDelegate.i].qty-1
             }
             viewDidLoad()
             audioPlayerInstance.play()
-        case 9://注文ボタン
+        case 53://注文ボタン
             appDelegate.i = 0
             appDelegate.tag_flag2 = 0 //tag2の初期化
-            let SViewController: UIViewController = Order()
-            viewSetting(SViewController: SViewController)
+            self.present(view.viewSet(view: Order(), anime: .flipHorizontal), animated: false, completion: nil)
+            audioPlayerInstance.play()
         case 13://商品名(1段目)
             appDelegate.i = 0
             appDelegate.count_t[0].now = "on"

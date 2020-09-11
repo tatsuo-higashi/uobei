@@ -314,18 +314,7 @@ class makeSound:AVAudioPlayer{
 //    }
 //}
 
-//view
-class makeView:UIImageView{
-    func make()->UIImageView{
-        // UIImageViewを作成.
-        let mess = UIImageView(frame: CGRect(x:CGFloat(0), y: CGFloat(0), width: CGFloat(550), height: CGFloat(700)))
-        // UIImageを作成.
-        let myImage: UIImage = UIImage(named: "call.jpeg")!
-        // 画像をUIImageViewに設定する.
-        mess.image = myImage
-        return(mess)
-    }
-}
+
 
 //stepper
 class makeStepper:UIStepper{
@@ -343,9 +332,17 @@ class makeStepper:UIStepper{
         return(stepper)
     }
 }
-
-
-
+    //viewの設定
+class viewSetting{
+    func viewSet(view:UIViewController,anime:UIModalTransitionStyle) -> UIViewController{
+        let SViewController: UIViewController = view
+        //アニメーションを設定する.
+        SViewController.modalTransitionStyle = anime
+        //Viewの移動する.
+        SViewController.modalPresentationStyle = .fullScreen
+        return SViewController
+    }
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {

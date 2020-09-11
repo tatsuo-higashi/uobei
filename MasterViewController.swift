@@ -56,6 +56,7 @@ extension MasterViewController: UITableViewDataSource {
 extension MasterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let view = viewSetting()
         switch sections[indexPath.section].items[indexPath.row] {
             case "アカウント":
                 if (indexPath.section==0){
@@ -80,10 +81,7 @@ extension MasterViewController: UITableViewDelegate {
                             for textField in textFields {
                                 if textField.text! == "1234"{
                                        appDelegate.view_setting = "年代別来店割合"
-                                       let SViewController: UIViewController = Test()
-                                       //Viewの移動する.
-                                       SViewController.modalPresentationStyle = .fullScreen
-                                       self.present(SViewController, animated: false, completion: nil)
+                                       self.present(view.viewSet(view: Test(), anime: .flipHorizontal), animated: false, completion: nil)
                                 }else if textField.text! != "1234"{
                                     let ngalert = UIAlertController(title: "パスワードが違います", message: "", preferredStyle: .alert)
                                     ngalert.view.setNeedsLayout() // シミュレータの種類によっては、これがないと警告が発生
