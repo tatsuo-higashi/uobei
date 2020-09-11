@@ -94,7 +94,7 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         scrollView.addSubview(label.make(xv:20,yv:380,wv:185,hv:35,f:15,o:0,o1:0,o2:0.0,ic:"レシート#   \(obj2.count)",al:"l"))
         
        //覚える
-        var num = (Int(obj!.adultCount)!) + (Int(obj!.childCount)!)
+        let num = (Int(obj!.adultCount)!) + (Int(obj!.childCount)!)
         
         //オプショナル型→!でキャスト
         scrollView.addSubview(label.make(xv:20,yv:410,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"席:\(obj!.seatType)"+"        \(num)名",al:"l"))
@@ -107,7 +107,7 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         scrollView.addSubview(label.make(xv:20,yv:530,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"----------------------------------------------",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:560,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"小計　　　   　　¥\(obj!.dish*100)",al:"l"))
         
-        var num2 = Int(Double(obj!.dish*100)*0.1)
+        let num2 = Int(Double(obj!.dish*100)*0.1)
         scrollView.addSubview(label.make(xv:20,yv:590,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"外税(10%)　　　　¥\(num2)",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:630,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"==================================",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:670,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"合計(\(obj!.dish))点　　　　¥\(obj!.dish*110)",al:"l"))

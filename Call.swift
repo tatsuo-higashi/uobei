@@ -1,4 +1,3 @@
-
 import UIKit
 import AVFoundation//オーディオがらみ
 import AVKit
@@ -8,7 +7,7 @@ import RealmSwift
 
 
 
-class call: UIViewController {
+class Call: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     // 画像を設定する.
     let myInputImage = CIImage(image: UIImage(named: "call.jpeg")!)
@@ -27,8 +26,8 @@ class call: UIViewController {
             let bc = makeBarcord()
             self.view.addSubview(bc.make(string: "12-34")!)
         }else{
-            let qrc = makeQrcode()
-            self.view.addSubview(qrc.make(sum: appDelegate.qr_string))
+//            let qrc = makeQrcode()
+//            self.view.addSubview(qrc.make(sum: appDelegate.qr_string))
         }
         
         //ボタン作成メソッド
@@ -43,7 +42,7 @@ class call: UIViewController {
             button.titleLabel?.numberOfLines = 2//0:無限改行,2:2行表示
             button.titleLabel?.font =  UIFont.systemFont(ofSize: 50)
             button.tag = c
-            button.addTarget(self, action: #selector(B1(sender:)), for: .touchUpInside)
+            button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
             // ボタンを追加する.
             self.view.addSubview(button)
         }
@@ -108,31 +107,10 @@ class call: UIViewController {
         return capturedImage
     }
     
-    @objc internal func B1(sender: UIButton){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let qrc = makeQrcode()
+    @objc internal func selection(sender: UIButton){
         let view = makeView()
         switch sender.tag{
-            case 0://言語切替
-                let image:UIImage = getScreenShot()
-                appDelegate.sc_image = image
-                showPrinterPicker()
-                let date = Date()
-                let dateAndTime = date.formattedDateWith(style: .time)
-                ab.outTime = dateAndTime
-
-                // (1)Realmのインスタンスを生成する
-                let realm = try! Realm()
-                // (2)書き込みトランザクション内でデータを追加する
-                try! realm.write {
-                    realm.add(ab)
-                }
-                let SViewController: UIViewController = ViewController()
-                //アニメーションを設定する.
-                SViewController.modalTransitionStyle = .flipHorizontal
-                //Viewの移動する.
-                SViewController.modalPresentationStyle = .fullScreen
-                self.present(SViewController, animated: true, completion: nil)
+           
             case 2:
                 let SViewController: UIViewController = ViewController()
                 //アニメーションを設定する.

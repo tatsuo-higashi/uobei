@@ -1,6 +1,7 @@
+
 import UIKit
 
-class camera: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class Camera: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     @IBOutlet weak var imageView: UIImageView!
     

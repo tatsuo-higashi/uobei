@@ -267,7 +267,6 @@ class makeBarcord:UIImageView{
     }
 }
 
-//QRコード作成class
 class makeQrcode:UIImageView{
   func make(xv:Int,yv:Int,wv:Int,hv:Int,sum:String)->UIImageView{
     let qrImageView = UIImageView(frame: CGRect(x:CGFloat(xv), y: CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
@@ -305,15 +304,15 @@ class makeSound:AVAudioPlayer{
     }
 }
 
-//ジェスチャー作成class
-class makeGess:UISwipeGestureRecognizer{
-    func make()->UISwipeGestureRecognizer{
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(Menu.leftSwipeView(sender:)))  //Swift3
-        // レフトスワイプのみ反応するようにする
-        leftSwipe.direction = .left
-        return(leftSwipe)
-    }
-}
+////ジェスチャー作成class
+//class makeGess:UISwipeGestureRecognizer{
+//    func make()->UISwipeGestureRecognizer{
+//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(Menu.leftSwipeView(sender:)))  //Swift3
+//        // レフトスワイプのみ反応するようにする
+//        leftSwipe.direction = .left
+//        return(leftSwipe)
+//    }
+//}
 
 //view
 class makeView:UIImageView{
