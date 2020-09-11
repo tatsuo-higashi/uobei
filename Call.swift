@@ -139,7 +139,7 @@ class Call: UIViewController {
                 print("ok11")
             case 12:
                 addTimer.invalidate()
-                let SViewController: UIViewController = call()
+                let SViewController: UIViewController = Call()
                 //アニメーションを設定する.
                 SViewController.modalTransitionStyle = .flipHorizontal
                 //Viewの移動する.

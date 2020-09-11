@@ -270,7 +270,7 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             viewDidLoad()
             appDelegate.dishSum = 0
             appDelegate.choise = 0
-            tag_flag2 = 0
+            appDelegate.tag_flag2 = 0
             //realm書き込み
             let date = Date()
             let dateAndTime = date.formattedDateWith(style: .time)

@@ -29,7 +29,7 @@ class ViewController: UIViewController ,selection{
         //クラスをインスタンス化
         let button = makeButton()//m:backgrand,e:picture,e:border
         let label = makeLabel()//o:border,o1:backgrand,o2:0でalpha無効,ic:300でむテキスト無効
-        let launchViewController: UIViewController = test()
+        let launchViewController: UIViewController = Test()
         audioPlayerInstance.prepareToPlay()
         self.addChild(launchViewController)  // 子ViewのViewControllerを指定
         launchViewController.didMove(toParent: self)  // 子Viewの所有権を譲渡
@@ -186,7 +186,7 @@ class ViewController: UIViewController ,selection{
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
             // rootViewControllerに入れる
-            appDelegate.window?.rootViewController = test()
+            appDelegate.window?.rootViewController = Test()
             // 表示
             appDelegate.window?.makeKeyAndVisible()
             //let SViewController: UIViewController = MasterViewController()
@@ -214,7 +214,6 @@ class ViewController: UIViewController ,selection{
             //self.view.addSubview(view.make())
             //self.view.addSubview(qrc.make())
         case 22://動画再生中のタップ
-            print("透明なボタン押してる")
             addTimer.invalidate()
             loadView()//videoplayerを破棄 画面遷移なしで
             viewDidLoad()
@@ -233,12 +232,8 @@ class ViewController: UIViewController ,selection{
         }
     }
     override func viewDidAppear(_ animated: Bool){
-        print("player破棄しにきた")
         addTimer.invalidate()
-        
-        print("loadviewはした")
         loadView()//videoplayerを破棄 画面遷移なしで
-        print("loadview後ろviewDidloadした")
         viewDidLoad()
     }
     

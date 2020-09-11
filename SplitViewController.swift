@@ -473,7 +473,7 @@ extension SplitViewController: UITableViewDelegate {
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         //　Storyboardを指定
         // rootViewControllerに入れる
-        appDelegate.window?.rootViewController = test()
+        appDelegate.window?.rootViewController = Test()
         // 表示
         appDelegate.window?.makeKeyAndVisible()
     }
@@ -485,7 +485,7 @@ extension SplitViewController: UITableViewDelegate {
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         //　Storyboardを指定
         // rootViewControllerに入れる
-        appDelegate.window?.rootViewController = test()
+        appDelegate.window?.rootViewController = Test()
         // 表示
         appDelegate.window?.makeKeyAndVisible()
     }
@@ -504,7 +504,7 @@ extension SplitViewController: UITableViewDelegate {
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
             // rootViewControllerに入れる
-            appDelegate.window?.rootViewController = test()
+            appDelegate.window?.rootViewController = Test()
             // 表示
             appDelegate.window?.makeKeyAndVisible()
         case 1://QRコードの値が変わった時
@@ -518,7 +518,7 @@ extension SplitViewController: UITableViewDelegate {
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
             // rootViewControllerに入れる
-            appDelegate.window?.rootViewController = test()
+            appDelegate.window?.rootViewController = Test()
             // 表示
             appDelegate.window?.makeKeyAndVisible()
         case 2://サウンドON-OFFのタッチ音値が変わった時
@@ -532,7 +532,7 @@ extension SplitViewController: UITableViewDelegate {
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
             // rootViewControllerに入れる
-            appDelegate.window?.rootViewController = test()
+            appDelegate.window?.rootViewController = Test()
             // 表示
             appDelegate.window?.makeKeyAndVisible()
         case 3://サウンドON-OFFのスクリーン音値が変わった時
@@ -546,7 +546,7 @@ extension SplitViewController: UITableViewDelegate {
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
             // rootViewControllerに入れる
-            appDelegate.window?.rootViewController = test()
+            appDelegate.window?.rootViewController = Test()
             // 表示
             appDelegate.window?.makeKeyAndVisible()
         default:break
