@@ -7,7 +7,7 @@ import CoreImage
 
 
 
-class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
+class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let myInputImage = CIImage(image: UIImage(named: "kara")!)
     var addTimer = Timer()
@@ -36,21 +36,24 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         //クラスをインスタンス化
         let button = makeButton()//m:backgrand,e:picture,e:border
         let label = makeLabel()//o:border,o1:backgrand,o2:0でalpha無効,ic:300でむテキスト無効
+        let qrc = makeQrcode()
+        let date = Date()
+        let dateAndTime = date.formattedDateWith(style: .longDateAndTime)
         //集計操作
         let realm = try! Realm()
         let obj = realm.objects(guestData.self).last
         let dish = obj!.dish
         let dishFee = String(formatterMake().string(from: dish*100 as NSNumber)!)
         
+        //スクロールビュー
         let scrollView = UIScrollView()
         //縦スクロールのみにする記述
         let scrollFrame = CGRect(x: 30, y: 50, width: view.frame.width/3, height: 640)
         scrollView.frame = scrollFrame
+        
         //ここのhightはスクロール出来る上限
         //scrollView.contentSizeのheightはscrollFrameのheightより大きい必要がある。
-       
         scrollView.contentSize = CGSize(width:self.view.frame.width/3, height: 770)
-  
         scrollView.layer.borderWidth = 1.5
         scrollView.layer.borderColor = UIColor.black.cgColor
         scrollView.backgroundColor = UIColor.clear
@@ -60,22 +63,9 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         //スクロール位置の表示
         //scrollView.showsVerticalScrollIndicator = false
         self.view.addSubview(scrollView)
-
-        scrollView.addSubview(label.make(xv:20,yv:15,wv:300,hv:20,f:25,o:0,o1:0,o2:0.0,ic:"うまいすしを、精一杯。"))
-        scrollView.addSubview(label.make(xv:20,yv:35,wv:300,hv:50,f:45,o:0,o1:0,o2:0.0,ic:"スシロー"))
-        scrollView.addSubview(label.make(xv:20,yv:95,wv:300,hv:25,f:35,o:0,o1:0,o2:0.0,ic:"ホール・キッチンスタッフ募集中!!"))
-        scrollView.addSubview(label.make(xv:20,yv:130,wv:300,hv:25,f:35,o:0,o1:0,o2:0.0,ic:"詳しくはURLから"))
-        scrollView.addSubview(label.make(xv:20,yv:165,wv:300,hv:25,f:35,o:0,o1:0,o2:0.0,ic:"www.akindo-sushiro.co.jp/m"))
-        
-     
-        scrollView.addSubview(label.make(xv:20,yv:195,wv:300,hv:175,f:35,o:2,o1:0,o2:0.0,ic:""))
-        scrollView.addSubview(label.make(xv:70,yv:210,wv:200,hv:40,f:35,o:2,o1:0,o2:0.0,ic:"アンケートに答えて\nお得なクーポンをゲット!"))
-        let qrc = makeQrcode()
-        scrollView.addSubview(qrc.make(xv:30,yv:260,wv:100,hv:100,sum:"https://www.akindo-sushiro.co.jp"))
-        scrollView.addSubview(label.make(xv:130,yv:260,wv:185,hv:35,f:10,o:0,o1:0,o2:0.0,ic:"QRからアンケートサイトにアクセス\n本レシートの招待番号を入力して下さい"))
         
         let text = "www.mysushiro.jp"
-        
+            
         // attributedTextを作成する.
         let attributedText = NSMutableAttributedString(string: text)
         let range = NSMakeRange(0, text.characters.count)
@@ -84,37 +74,38 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         attributedText.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)
         
         // 対象のラベルを作成して、attributedTextを設定する.
-       let label2 = UILabel(frame: CGRect(x:CGFloat(145), y: CGFloat(290), width: CGFloat(185), height: CGFloat(45)))
+        let label2 = UILabel(frame: CGRect(x:CGFloat(145), y: CGFloat(290), width: CGFloat(185), height: CGFloat(45)))
         label2.attributedText = attributedText
         scrollView.addSubview(label2)
         
+        let obj2 = realm.objects(allData.self)
+        let num = (Int(obj!.adultCount)!) + (Int(obj!.childCount)!)
+        let num2 = Int(Double(obj!.dish*100)*0.1)
+
+        scrollView.addSubview(label.make(xv:20,yv:15,wv:300,hv:20,f:25,o:0,o1:0,o2:0.0,ic:"うまいすしを、精一杯。"))
+        scrollView.addSubview(label.make(xv:20,yv:35,wv:300,hv:50,f:45,o:0,o1:0,o2:0.0,ic:"スシロー"))
+        scrollView.addSubview(label.make(xv:20,yv:95,wv:300,hv:25,f:35,o:0,o1:0,o2:0.0,ic:"ホール・キッチンスタッフ募集中!!"))
+        scrollView.addSubview(label.make(xv:20,yv:130,wv:300,hv:25,f:35,o:0,o1:0,o2:0.0,ic:"詳しくはURLから"))
+        scrollView.addSubview(label.make(xv:20,yv:165,wv:300,hv:25,f:35,o:0,o1:0,o2:0.0,ic:"www.akindo-sushiro.co.jp/m"))
+        scrollView.addSubview(label.make(xv:20,yv:195,wv:300,hv:175,f:35,o:2,o1:0,o2:0.0,ic:""))
+        scrollView.addSubview(label.make(xv:70,yv:210,wv:200,hv:40,f:35,o:2,o1:0,o2:0.0,ic:"アンケートに答えて\nお得なクーポンをゲット!"))
+        scrollView.addSubview(qrc.make(xv:30,yv:260,wv:100,hv:100,sum:"https://www.akindo-sushiro.co.jp"))
+        scrollView.addSubview(label.make(xv:130,yv:260,wv:185,hv:35,f:10,o:0,o1:0,o2:0.0,ic:"QRからアンケートサイトにアクセス\n本レシートの招待番号を入力して下さい"))
         scrollView.addSubview(label.make(xv:110,yv:330,wv:185,hv:35,f:10,o:0,o1:0,o2:0.0,ic:"回答期限:本日より7日以内"))
-        
-         let obj2 = realm.objects(allData.self)
-        scrollView.addSubview(label.make(xv:20,yv:380,wv:185,hv:35,f:15,o:0,o1:0,o2:0.0,ic:"レシート#   \(obj2.count)",al:"l"))
-        
-       //覚える
-        var num = (Int(obj!.adultCount)!) + (Int(obj!.childCount)!)
-        
-        //オプショナル型→!でキャスト
-        scrollView.addSubview(label.make(xv:20,yv:410,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"席:\(obj!.seatType)"+"        \(num)名",al:"l"))
-        
-        let date = Date()
-        let dateAndTime = date.formattedDateWith(style: .longDateAndTime)
         scrollView.addSubview(label.make(xv:20,yv:440,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"\(dateAndTime)",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:470,wv:300,hv:35,f:15,o:0,o1:0,o2:0.0,ic:"扱者:佐藤と東",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:500,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"100円皿 (\(obj!.dish)点 × @¥100) ¥\(obj!.dish*100)",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:530,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"----------------------------------------------",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:560,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"小計　　　   　　¥\(obj!.dish*100)",al:"l"))
-        
-        var num2 = Int(Double(obj!.dish*100)*0.1)
         scrollView.addSubview(label.make(xv:20,yv:590,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"外税(10%)　　　　¥\(num2)",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:630,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"==================================",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:670,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"合計(\(obj!.dish))点　　　　¥\(obj!.dish*110)",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:700,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"お預り　　　　　　　　　　　　¥\(inputNum)",al:"l"))
         scrollView.addSubview(label.make(xv:20,yv:730,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"お釣　　　　　　　　　　　　　¥\(change)",al:"l"))
+        scrollView.addSubview(label.make(xv:20,yv:380,wv:185,hv:35,f:15,o:0,o1:0,o2:0.0,ic:"レシート#   \(obj2.count)",al:"l"))
+        scrollView.addSubview(label.make(xv:20,yv:410,wv:300,hv:35,f:25,o:0,o1:0,o2:0.0,ic:"席:\(obj!.seatType)"+"        \(num)名",al:"l"))
         
-        
+    
 
 
         //ラベル作成 //計算
@@ -189,14 +180,13 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         var input = inputNum
         calculation = Int(input.replacingOccurrences(of: ",", with: ""))!
         if input.first == "0"{input = String(input.dropFirst())}
-        if input.count >= 7 {
+        if input.count >= 8 {
             warning = "これ以上入力できません"
             viewDidLoad()
             return input
         }else{
             warning = ""
             viewDidLoad()
-            //if input.count == 4 {input = inputNum + ","}
             return input
         }
     }
@@ -211,7 +201,9 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     }
     
     //ボタンイベント
-    @objc func B3(sender: UIButton){
+    @objc func selection(sender: UIButton){
+        let view = viewSetting()
+        
         if sender.tag <= 10 {
             k = sender.tag
         }
@@ -219,33 +211,31 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             l = sender.tag
         }
         switch sender.tag{
-         case k://tenkey
-                       if inputNum.count <= 7{
-                           if k == 10 {
-                               inputNum += "0"
-                           }else{
-                               inputNum += "\(k)"
-                           }
-                           let value = Int(inputNum.replacingOccurrences(of: ",", with: ""))!
-                           inputNum = String(formatterMake().string(from: value as NSNumber)!)
-                       }
-                       inputNum = tenkeyHandle(inputNum: inputNum)
-                       audioPlayerInstance.play()
+            case k://tenkey
+                if inputNum.count <= 7{
+                    if k == 10 {
+                        inputNum += "0"
+                    }else{
+                        inputNum += "\(k)"
+                    }
+                    let value = Int(inputNum.replacingOccurrences(of: ",", with: ""))!
+                    inputNum = String(formatterMake().string(from: value as NSNumber)!)
+                }
+                inputNum = tenkeyHandle(inputNum: inputNum)
+                audioPlayerInstance.play()
         case 20://戻るボタン
-            let SViewController: UIViewController = ViewController()
-            SViewController.modalTransitionStyle = .flipHorizontal
-            SViewController.modalPresentationStyle = .fullScreen
-            self.present(SViewController, animated: true, completion: nil)
+            self.present(view.viewSet(open: ViewController(),anime: .flipHorizontal), animated: false, completion: nil)
+            audioPlayerInstance.play()
         case 21://Enter
             if inputNum == ""{break}
-            let value = Int(inputNum.replacingOccurrences(of: ",", with: ""))! - (dishSum * 110)
+            let value = Int(inputNum.replacingOccurrences(of: ",", with: ""))! - (appDelegate.dishSum * 110)
             if value < 0 {
                 let ngalert = UIAlertController(title: "再入力してください", message: "", preferredStyle: .alert)
                 ngalert.view.setNeedsLayout() // シミュレータの種類によっては、これがないと警告が発生
                 // アラート表示
                 self.present(ngalert, animated: true, completion: {
                     // アラートを閉じる
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                         ngalert.dismiss(animated: true, completion: nil)
                     })
                 })
@@ -260,17 +250,20 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 // アラート表示
                 self.present(ngalert, animated: true, completion: {
                     // アラートを閉じる
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                        ngalert.dismiss(animated: true, completion: nil)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                        ngalert.dismiss(animated: false, completion: nil)
                     })
                 })
                 break
             }
+            
             change = String(formatterMake().string(from: value as NSNumber)!)
+            
+            //値の初期化
             viewDidLoad()
-            dishSum = 0
+            appDelegate.dishSum = 0
             appDelegate.choise = 0
-            tag_flag2 = 0
+            appDelegate.tagFlag2 = 0
             //realm書き込み
             let date = Date()
             let dateAndTime = date.formattedDateWith(style: .time)
@@ -284,50 +277,49 @@ class kaikei2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             }
             let saveObj = realm.objects(appSetting.self).last
             try! realm.write {
-                saveObj?.touch_volume = appDelegate.touch_volume
-                saveObj?.movie_volume = appDelegate.movie_volume
-                saveObj?.volume_m = appDelegate.volume_m
-                saveObj?.volume_m_sta = appDelegate.volume_m_sta
-                saveObj?.volume_v_sta = appDelegate.volume_v_sta
-                saveObj?.sound_num = appDelegate.sound_num
-                saveObj?.movie_num = appDelegate.movie_num
+                saveObj?.touchVolume = appDelegate.touchVolume
+                saveObj?.movieVolume = appDelegate.movieVolume
+                saveObj?.volumeM = appDelegate.volumeM
+                saveObj?.volumeMstatus = appDelegate.volumeMstatus
+                saveObj?.volumeVstatus = appDelegate.volumeVstatus
+                saveObj?.soundNum = appDelegate.soundNum
+                saveObj?.movieNum = appDelegate.movieNum
                 saveObj?.pickerView1Ini = appDelegate.pickerView1Ini
                 saveObj?.pickerView2Ini = appDelegate.pickerView2Ini
             }
             let allObj = realm.objects(allData.self).last
             try! realm.write{
-                allObj?.inTime = obj?.inTime as! String
-                allObj?.outTime = obj?.outTime as! String
-                allObj?.adultCount = obj?.adultCount as! String
-                allObj?.childCount = obj?.childCount as! String
-                allObj?.dish = obj?.dish as! Int
+                allObj?.inTime = obj!.inTime
+                allObj?.outTime = obj!.outTime
+                allObj?.adultCount = obj!.adultCount
+                allObj?.childCount = obj!.childCount
+                allObj?.dish = obj!.dish
                 allObj?.generation = generation
-                allObj?.seatNum = obj?.seatNum as! String
-                allObj?.seatType = obj?.seatType as! String
+                allObj?.seatNum = obj!.seatNum
+                allObj?.seatType = obj!.seatType
             }
             appDelegate.geneMaskFlag = 100
             appDelegate.history = []
+            audioPlayerInstance.play()
+            
             //遅延
             DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                let SViewController: UIViewController = hakken()
-                //アニメーションを設定する.
-                SViewController.modalTransitionStyle = .flipHorizontal
-                //Viewの移動する.
-                SViewController.modalPresentationStyle = .fullScreen
-                self.present(SViewController, animated: true, completion: nil)
+                self.present(view.viewSet(open: Ticket(),anime: .flipHorizontal), animated: false, completion: nil)
+                
             }
         case 22:
-                       //✗
-                       inputNum = String(inputNum.dropLast())
-                       if inputNum == "" {
-                           viewDidLoad()
-                           audioPlayerInstance.play()
-                           break
-                       }
-                       let value = Int(inputNum.replacingOccurrences(of: ",", with: ""))!
-                       inputNum = String(formatterMake().string(from: value as NSNumber)!)
-                       viewDidLoad()
-                       audioPlayerInstance.play()
+            //✗
+            inputNum = String(inputNum.dropLast())
+            if inputNum == "" {
+                viewDidLoad()
+                audioPlayerInstance.play()
+                break
+            }
+            let value = Int(inputNum.replacingOccurrences(of: ",", with: ""))!
+            inputNum = String(formatterMake().string(from: value as NSNumber)!)
+            warning = ""
+            viewDidLoad()
+            audioPlayerInstance.play()
         //年齢層
         case l:
             generation = genArray[l - 30]

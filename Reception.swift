@@ -5,7 +5,9 @@ import AVKit
 import Foundation
 import RealmSwift
 import CoreImage
-class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
+
+
+class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let myInputImage = CIImage(image: UIImage(named: "hakken2")!)
     var addTimer = Timer()
@@ -13,16 +15,6 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     var flag:[Bool] = [false,false,false]
     
     
-    
-    //viewの設定
-    func viewSetting(SViewController:UIViewController){
-        //アニメーションを設定する.
-        SViewController.modalTransitionStyle = .flipHorizontal
-        //Viewの移動する.
-        SViewController.modalPresentationStyle = .fullScreen
-        self.present(SViewController, animated: true, completion: nil)
-    }
- 
     override func viewDidLoad() {
         super.viewDidLoad()
         audioPlayerInstance.prepareToPlay()
@@ -31,6 +23,7 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         myImageView = UIImageView(frame: CGRect(x: 0,y: 0,width: 1024,height: 768))
         myImageView.image = UIImage(ciImage: myInputImage!)
         self.view.addSubview(myImageView)
+        
         //クラスをインスタンス化
         let button = makeButton()//m:backgrand,e:picture,e:border
         let label = makeLabel()//o:border,o1:backgrand,o2:0でalpha無効,ic:300でむテキスト無効
@@ -57,6 +50,7 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         self.view.addSubview(button.make(xv:595,yv:440,wv:365,hv:100,f:50,b:"テーブル",c:17,d:1,e:0,m:1))
         self.view.addSubview(button.make(xv:215,yv:570,wv:745,hv:100,f:50,b:"発券",c:18,d:1,e:0,m:1))
         self.view.addSubview(button.make(xv:40,yv:710,wv:100,hv:50,f:50,b:"戻る",c:19,d:1,e:0,m:1))
+        
         //マスク用label上段
         if appDelegate.maskFlag != 100 {
             self.view.addSubview(label.make(xv:215 + (appDelegate.maskFlag*95),yv:180,wv:80,hv:80,f:50,o:0,o1:2,o2:0.3, ic: ""))
@@ -70,19 +64,19 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             self.view.addSubview(label.make(xv:215 + (appDelegate.maskFlag3*380),yv:440,wv:365,hv:100,f:50,o:0,o1:2,o2:0.3, ic: ""))
         }
         
-        
-        
         func didReceiveMemoryWarning() {
             super.didReceiveMemoryWarning()
             // Dispose of any resources that can be recreated.
         }
     }
-
-    @objc func B3(sender: UIButton){
+    
+    //ボタンイベント
+    @objc func selection(sender: UIButton){
+        let view = viewSetting()
+        let realm = try! Realm()
+        let guestDataObj = realm.objects(guestData.self).last
         if sender.tag <= 7 {
             k = sender.tag
-            let realm = try! Realm()
-            let guestDataObj = realm.objects(guestData.self).last
             try! realm.write {
                 guestDataObj?.adultCount = "\(k)"
             }
@@ -93,8 +87,6 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         }
         if sender.tag >= 8 && sender.tag <= 15{
             l = sender.tag - 8
-            let realm = try! Realm()
-            let guestDataObj = realm.objects(guestData.self).last
             try! realm.write {
                 guestDataObj?.childCount = "\(l)"
             }
@@ -105,8 +97,6 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         }
         switch sender.tag{
         case 16:
-            let realm = try! Realm()
-            let guestDataObj = realm.objects(guestData.self).last
             try! realm.write {
                 guestDataObj?.seatType = "カウンター"
             }
@@ -115,8 +105,6 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             viewDidLoad()
             audioPlayerInstance.play()
         case 17:
-            let realm = try! Realm()
-            let guestDataObj = realm.objects(guestData.self).last
             try! realm.write {
                 guestDataObj?.seatType = "テーブル"
             }
@@ -133,17 +121,16 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 appDelegate.maskFlag = 100
                 appDelegate.maskFlag2 = 100
                 appDelegate.maskFlag3 = 100
-                let SViewController: UIViewController = first()
-                viewSetting(SViewController: SViewController)
+                self.present(view.viewSet(open: First(),anime: .crossDissolve), animated: false, completion: nil)
                 audioPlayerInstance.play()
-            }else{
+            }else{  //ポップアップ表示
                 let ngalert = UIAlertController(title: "未入力があります", message: "", preferredStyle: .alert)
                 ngalert.view.setNeedsLayout() // シミュレータの種類によっては、これがないと警告が発生
                 // アラート表示
                 self.present(ngalert, animated: true, completion: {
                     // アラートを閉じる
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                    ngalert.dismiss(animated: true, completion: nil)
+                        ngalert.dismiss(animated: true, completion: nil)
                     })
                 })
                 break
@@ -156,8 +143,7 @@ class hakken2: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             appDelegate.maskFlag = 100
             appDelegate.maskFlag2 = 100
             appDelegate.maskFlag3 = 100
-            let SViewController: UIViewController = hakken()
-            viewSetting(SViewController: SViewController)
+            self.present(view.viewSet(open: Ticket(),anime: .crossDissolve), animated: false, completion: nil)
         default:break
         }
     }

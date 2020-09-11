@@ -6,6 +6,12 @@ import Foundation
 import UserNotifications//リモート通信に必要
 import RealmSwift
 
+//senderTag用変数
+var k = 0
+var j = 0
+var l = 0
+
+var myImageView: UIImageView!
 
 //時間作成
 extension Date {
@@ -66,16 +72,16 @@ class guestData:Object{
 
 //realm作成 設定初期値
 class appSetting:Object{
-    @objc dynamic var touch_volume: Float = 0.5
-    @objc dynamic var movie_volume: Float = 0.5
-    @objc dynamic var qr_sta: String = "qr"
-    @objc dynamic var qr_string: String = ""
-    @objc dynamic var volume_m: Float = 0.5
-    @objc dynamic var volume_v: Float = 0.5
-    @objc dynamic var volume_m_sta: String = "on"
-    @objc dynamic var volume_v_sta: String = "on"
-    @objc dynamic var sound_num: String = "button01a"
-    @objc dynamic var movie_num: String = "movie01"
+    @objc dynamic var touchVolume: Float = 0.5
+    @objc dynamic var movieVolume: Float = 0.5
+    @objc dynamic var qrStatus: String = "qr"
+    @objc dynamic var qrString: String = ""
+    @objc dynamic var volumeM: Float = 0.5
+    @objc dynamic var volumeV: Float = 0.5
+    @objc dynamic var volumeMstatus: String = "on"
+    @objc dynamic var volumeVstatus: String = "on"
+    @objc dynamic var soundNum: String = "button01a"
+    @objc dynamic var movieNum: String = "movie01"
     @objc dynamic var pickerView1Ini: Int = 0
     @objc dynamic var pickerView2Ini: Int = 0
 }
@@ -124,65 +130,74 @@ class makeLabel:UILabel{
         }
         return(label)
     }
-    func make(xv:Int,yv:Int,wv:Int,hv:Int,f:Int,o:Int,o1:Int,o2:Double,ic:String,al:String)->UILabel{
-         let label = UILabel(frame: CGRect(x:CGFloat(xv), y: CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
-         if al=="c"{
-         label.textAlignment = NSTextAlignment.center
-         }else{
-          label.textAlignment = NSTextAlignment.left
-           print("レフトにきた")
-         }
-         label.adjustsFontSizeToFitWidth = true
-         if o == 2{
-           label.layer.borderWidth = 1.5
-           label.layer.borderColor = UIColor.black.cgColor
-         }
-         label.font = label.font.withSize(CGFloat(f))
-         if ic != ""{
-           label.text = ic
-         }
-         label.numberOfLines = 0
-         label.layer.cornerRadius = 3.0
-         if o1 == 0{
-           label.backgroundColor = UIColor.clear
-         }else if o1 == 1{
-           label.backgroundColor = UIColor.white
-         }else if o1 == 2{
-           label.backgroundColor = UIColor.black
-         }else{
-           label.backgroundColor = UIColor.yellow
-         }
-         if o2 != 0{
-           label.alpha = CGFloat(o2)
-         }
-         return(label)
-       }
-}
-
-//スライダー作成class
-class SliderClass: NSObject {
-    var title: String
-    var subtitle: String
-    var sliderMinimum: Float
-    var sliderMaximum: Float
     
-    init(title: String, subtitle: String, sliderMinimum: Float, sliderMaximum: Float) {
-        self.title = "a"
-        self.subtitle = "b"
-        self.sliderMinimum = 10
-        self.sliderMaximum = 30
+    func make(xv:Int,yv:Int,wv:Int,hv:Int,f:Int,o:Int,o1:Int,o2:Double,ic:String,al:String)->UILabel{
+        let label = UILabel(frame: CGRect(x:CGFloat(xv), y: CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
+        if al=="c"{
+            label.textAlignment = NSTextAlignment.center
+        }else{
+            label.textAlignment = NSTextAlignment.left
+        }
+        label.adjustsFontSizeToFitWidth = true
+        if o == 2{
+            label.layer.borderWidth = 1.5
+            label.layer.borderColor = UIColor.black.cgColor
+        }
+            label.font = label.font.withSize(CGFloat(f))
+        if ic != ""{
+            label.text = ic
+        }
+            label.numberOfLines = 0
+            label.layer.cornerRadius = 3.0
+        if o1 == 0{
+            label.backgroundColor = UIColor.clear
+        }else if o1 == 1{
+            label.backgroundColor = UIColor.white
+        }else if o1 == 2{
+            label.backgroundColor = UIColor.black
+        }else{
+            label.backgroundColor = UIColor.yellow
+        }
+        if o2 != 0{
+            label.alpha = CGFloat(o2)
+        }
+        return(label)
+    }
+    
+    //order数量用
+    func make(label:UILabel,num:Int) -> UILabel{
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let label = UILabel(frame: CGRect(x:CGFloat(310), y: CGFloat(280 + num * 60), width: CGFloat(60), height: CGFloat(60)))
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 1.5
+        label.font = label.font.withSize(CGFloat(50))
+        label.textAlignment = NSTextAlignment.center
+        if appDelegate.box[num].name  != ""{
+            label.text = ("\(appDelegate.box[num].qty)")
+        }
+        label.numberOfLines = 0
+        label.backgroundColor = UIColor.clear
+        return label
+    }
+    
+    //order種類作成用
+    func make(label:UILabel,num:String) -> UILabel{
+        let label = UILabel(frame: CGRect(x:CGFloat(50), y: CGFloat(280 + (Int(num)! - 1) * 60), width: CGFloat(60), height: CGFloat(60)))
+        label.layer.borderColor = UIColor.black.cgColor
+        label.layer.borderWidth = 1.5
+        label.font = label.font.withSize(CGFloat(50))
+        label.textAlignment = NSTextAlignment.center
+        label.text = (num)
+        label.numberOfLines = 0
+        label.backgroundColor = UIColor.clear
+        return label
     }
 }
 
-protocol selection {
-    func selection(sender: UIButton)
-}
-
 //ボタン作成class(イメージ有り)
-class makeButton:UIButton,selection{
+class makeButton:UIButton{
+    //抽象メソッド定義
     @objc func selection(sender: UIButton) {}
-    
-    
     func make(xv:Int,yv:Int,wv:Int,hv:Int,f:Int,b:String,c:Int,d:Int,e:Int,m:Int)->UIButton{
         let button: UIButton = UIButton(frame: CGRect(x:CGFloat(xv), y:CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
         button.titleLabel?.adjustsFontSizeToFitWidth = true  //文字列をボタンに収める設定
@@ -221,25 +236,110 @@ class makeButton:UIButton,selection{
         button.layer.cornerRadius = 3.0
         button.tag = c
         button.setTitle("\(b)", for: .normal)
-       
-        
-        if t == 0{
-            
+        switch t {
+        case 0:
             button.backgroundColor = UIColor.clear
             button.setImage(picture, for: .normal)
-        }else{
+        case 1:
             button.backgroundColor = UIColor.white
             button.layer.borderColor = UIColor.brown.cgColor
             button.layer.borderWidth = 1.5
             button.setTitleColor(UIColor.red, for: .normal)
             button.titleLabel?.numberOfLines = 2//0:無限改行,2:2行表示
             button.titleLabel?.font =  UIFont.systemFont(ofSize: 50)
+        default:
+            break
         }
-       
         button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
         return(button)
     }
+    
+    //orderタグ作成
+    func make(xv:Int,yv:Int,wv:Int,hv:Int,b:String,c:Int) -> UIButton{
+        let button: UIButton = UIButton(frame: CGRect(x:CGFloat(xv), y:CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
+        let picture = UIImage(named: "\(b).png")
+        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderWidth = 1
+        button.backgroundColor = UIColor.clear
+        button.setTitle("\(b)", for: .normal)
+        button.tag = c
+        button.setImage(picture, for: .normal)
+        button.layer.cornerRadius = 6
+        button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
+        return button
+    }
+    
+    //orderボタン作成
+    func make(xv:Int,yv:Int,wv:Int,hv:Int,c:Int,b:String) -> UIButton{
+        let button: UIButton = UIButton(frame: CGRect(x:CGFloat(xv), y:CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.backgroundColor = UIColor.white
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.5
+        button.setTitle("\(b)", for: .normal)
+        button.layer.cornerRadius = 6
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.numberOfLines = 2//0:無限改行,2:2行表示
+        button.titleLabel?.font =  UIFont.systemFont(ofSize: 25)
+        button.tag = c
+        //button.layer.position = CGPoint(x: self.view.bounds.width/2 , y:self.view.bounds.height-CGFloat(yh))
+        button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
+        return button
+    }
+    
+    //order商品増減
+    func make(b:String,xv:Int,yv:Int,wv:Int,hv:Int,f:Int,c:Int) -> UIButton{
+        let button: UIButton = UIButton(frame: CGRect(x:CGFloat(xv), y:CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
+        let picture = UIImage(named: "button.jpeg")
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 0
+        button.layer.cornerRadius = 3.0
+        button.titleLabel?.numberOfLines = 2//0:無限改行,2:2行表示
+        button.titleLabel?.font =  UIFont.systemFont(ofSize: 45)
+        button.tag = c
+        button.setBackgroundImage(picture, for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitle("\(b)", for: .normal)
+        button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
+        return button
+    }
+    
+    //order商品名用
+    func make(button:UIButton,num:Int) -> UIButton{
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let button = UIButton(frame: CGRect(x:CGFloat(110), y: CGFloat(280 + num * 60), width: CGFloat(200), height: CGFloat(60)))
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.5
+        button.titleLabel?.font =  UIFont.systemFont(ofSize: 35)
+        button.setTitle("\(appDelegate.box[num].name)", for: .normal)
+        button.titleLabel?.numberOfLines = 1//0:無限改行,2:2行表示
+        button.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        button.backgroundColor = UIColor.clear
+        button.tag = 13
+        button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
+        return button
+    }
 }
+//スライダー作成class
+class SliderClass: NSObject {
+    var title: String
+    var subtitle: String
+    var sliderMinimum: Float
+    var sliderMaximum: Float
+    
+    init(title: String, subtitle: String, sliderMinimum: Float, sliderMaximum: Float) {
+        self.title = "a"
+        self.subtitle = "b"
+        self.sliderMinimum = 10
+        self.sliderMaximum = 30
+    }
+}
+
+protocol selection {
+    func selection(sender: UIButton)
+}
+
 
 //バーコード作成class
 class makeBarcord:UIImageView{
@@ -301,7 +401,7 @@ class makeSound:AVAudioPlayer{
         }
         // 再生準備
         audioPlayerInstance.prepareToPlay()
-        audioPlayerInstance.volume = appDelegate.volume_m
+        audioPlayerInstance.volume = appDelegate.volumeM
         return(audioPlayerInstance)
     }
 }
@@ -309,25 +409,13 @@ class makeSound:AVAudioPlayer{
 //ジェスチャー作成class
 class makeGess:UISwipeGestureRecognizer{
     func make()->UISwipeGestureRecognizer{
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(menu.leftSwipeView(sender:)))  //Swift3
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(Menu.leftSwipeView(sender:)))  //Swift3
         // レフトスワイプのみ反応するようにする
         leftSwipe.direction = .left
         return(leftSwipe)
     }
 }
 
-//view
-class makeView:UIImageView{
-    func make()->UIImageView{
-        // UIImageViewを作成.
-        let mess = UIImageView(frame: CGRect(x:CGFloat(0), y: CGFloat(0), width: CGFloat(550), height: CGFloat(700)))
-        // UIImageを作成.
-        let myImage: UIImage = UIImage(named: "call.jpeg")!
-        // 画像をUIImageViewに設定する.
-        mess.image = myImage
-        return(mess)
-    }
-}
 
 //stepper
 class makeStepper:UIStepper{
@@ -346,41 +434,136 @@ class makeStepper:UIStepper{
     }
 }
 
-
+class viewSetting{
+    //viewの設定
+    func viewSet(open:UIViewController,anime:UIModalTransitionStyle) -> UIViewController{
+           let view:UIViewController  = open
+           //アニメーションを設定する.
+           view.modalTransitionStyle = anime
+           //Viewの移動する.
+           view.modalPresentationStyle = .fullScreen
+           return view
+       }
+}
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     var window: UIWindow?
     var choise: Int = 0//メニュー選択
-    var change_flag: Int = 0//設定画面選択
-    var view_setting: String = "アカウント"
+    var viewSetting: String = "アカウント"
     var history: [(name:String,num:Int)] = []//からの配列
-    var sound_flag: String = "on"
-    var touch_sound: String = "on"
-    var movie_sound: String = "on"
-    var touch_volume: Float = 0.5
-    var movie_volume: Float = 0.5
-    var sc_image: UIImage?
-    var qr_sta: String = "qr"
-    var qr_string: String = ""
-    var volume_m: Float = 0.5
-    var volume_v: Float = 0.5
-    var volume_m_sta: String = "on"
-    var volume_v_sta: String = "on"
-    var sound_num: String = "button01a"
-    var movie_num: String = "movie01"
+    var touchSound: String = "on"
+    var movieSound: String = "on"
+    var touchVolume: Float = 0.5
+    var movieVolume: Float = 0.5
+    var scImage: UIImage?
+    var qrStatus: String = "qr"
+    var qrString: String = ""
+    var volumeM: Float = 0.5
+    var volumeV: Float = 0.5
+    var volumeMstatus: String = "on"
+    var volumeVstatus: String = "on"
+    var soundNum: String = "button01a"
+    var movieNum: String = "movie01"
     var pickerView1Ini: Int = 0
     var pickerView2Ini: Int = 0
     var maskFlag: Int = 100
     var maskFlag2: Int = 100
     var maskFlag3: Int = 100
     var geneMaskFlag: Int = 100
+    var tagFlag2 = 0
+    var dishSum = 0
+    var i = 0  //カウント用変数
+    
+    //メニュー関係
+    var countMenu: [(k:Int,now:String)] = [
+        (0,""),
+        (0,""),
+        (0,"")]
+    var box: [(name: String, qty: Int ,view: String)] = [
+        ("",0,"kara.png"),
+        ("",0,"kara.png"),
+        ("",0,"kara.png")]
+    var tag1: [String] = ["セットメニュー・期間限定","どか盛りフェア","にぎり(おすすめ)","にぎり①","にぎり②","ぐんかん・巻物・いなり","サイドメニュー","デザート","ドリンク・アルコール" ]
+    var tag2: [[String]] = [[("ページ1")],//tag0 セットメニュー・季節限定
+        [("ページ1"), ("ページ2")],//tag1 どか盛り
+        [("ページ1")],//tag2 にぎりおすすめ
+        [("まぐろ"), ("サーモン"),("えび"),("いか・たこ"),("光物"),("貝")],//tag3 にぎり①
+        [("うなぎ・穴子"), ("その他1"),("その他2")],//tag4 にぎり②
+        [("ぐんかん1"), ("ぐんかん2"),("巻物・いなり")],//ぐんかん・巻物・いなり
+        [("麺"), ("味噌汁"),("揚げ物"),("その他")],//サイドメニュー
+        [("デザート1"), ("デザート2"),("デザート3")],//デザート
+        [("アルコール"), ("ソフトドリンク")],//ドリンク・アルコール
+    ]
+
+    //
+    let data: [[[(name: String, pic: String)]]] =
+        [
+            [[(name:"蟹の豪華盛り",pic:"001"), (name:"生タコ梅キュウ",pic:"002"),(name:"よだれ鶏にぎり",pic:"003"),(name:"匠の本格海老マヨ",pic:"004"),(name:"すりながしカレーうどん",pic:"005")]],
+            //
+            [[(name:"どか盛りホタテ",pic:"006"), (name:"どか盛りいくらサーモン",pic:"007"),(name:"どか盛り甘えび",pic:"008"),(name:"どか盛りびんとろ",pic:"009"),(name:"ローストビーフマウンテン",pic:"010"),(name:"Wかつお",pic:"011")],[(name:"どか盛りねぎとろ",pic:"012")]],
+            //おすすめ握り
+            [[(name:"生ほっき貝",pic:"013"), (name:"生本まぐろ",pic:"014"),(name:"生本まぐろ大とろ",pic:"015"),(name:"特大天然車えび",pic:"016"),(name:"特大ジャンボほたて",pic:"017")]],
+            //握り1
+            [[(name:"まぐろ",pic:"018"), (name:"漬けまぐろ",pic:"019"),(name:"びんとろ",pic:"020"),(name:"中とろ",pic:"021"),(name:"大トロ",pic:"022")],[(name:"サーモン",pic:"023"),    (name:"オニオンサーモン",pic:"024"),(name:"焼サーモン",pic:"025"),(name:"おろしサーモン",pic:"026"),(name:"サーモンモッツアレラ",pic:"027"),(name:"生サーモン",pic:"028")],
+             [(name:"赤えび",pic:"029"),(name:"えび",pic:"030"),(name:"生えび",pic:"031"),(name:"えびチーズ",pic:"032"),(name:"えびバジルチーズ",pic:"033"),                           (name:"えびアボカド",pic:"034")],
+             [(name:"紋甲いか",pic:"035"), (name:"いか",pic:"036"),(name:"いか塩レモン",pic:"037"),(name:"こういか",pic:"038"),(name:"たこ",pic:"039"),(name:"生たこ",pic:"040")],
+             [(name:"こはだ",pic:"041"), (name:"〆さば",pic:"042"),(name:"〆さば(ゴマねぎ)",pic:"043"),(name:"焼き鯖",pic:"044"),(name:"〆イワシ",pic:"045")],
+             [(name:"つぶ貝",pic:"046"), (name:"赤貝",pic:"047"),(name:"ほっき貝",pic:"048"),(name:"ほたて貝柱",pic:"049"),(name:"黒みる貝",pic:"050"),(name:"白とり貝",pic:"051")]],
+            //握り2
+            [[(name:"うなぎ",pic:"052"), (name:"穴子",pic:"053"),(name:"炙り穴子",pic:"054"),(name:"一本穴子",pic:"055")],
+             [(name:"生ハム",pic:"056"), (name:"生ハムモッツアレラ",pic:"057"),(name:"牛塩カルビ",pic:"058"),(name:"和牛さし",pic:"059")],
+             [(name:"たまご",pic:"060"), (name:"キス天ぷら",pic:"061"),(name:"なす漬物",pic:"062")]],
+            //ぐんかん・巻物・いなり
+            [[(name:"まぐろたたき",pic:"063"), (name:"山かけ",pic:"064"),(name:"まぐろユッケ",pic:"065"),(name:"イカおくら",pic:"066"),(name:"えびマヨ",pic:"067"),(name:"カニみそ",pic:"068")],
+             [(name:"いくら",pic:"069"),(name:"コーンマヨ",pic:"070"),(name:"ツナ",pic:"071")],
+             [(name:"鉄火巻き",pic:"072"), (name:"かっぱ巻き",pic:"073"),(name:"かんぴょう巻き",pic:"074"),(name:"うなきゅう",pic:"075"), (name:"季節のいなり",pic:"076")]],
+            //サイドメニュー
+            [[(name:"コク旨まぐろ醤油ラーメン",pic:"077"), (name:"鯛だし塩ラーメン",pic:"078"),(name:"濃厚えび味噌ワンタンメン",pic:"079"),(name:"あさりと筍のおうどん",pic:"080"),(name:"かけうどん",pic:"081"),(name:"エビ天うどん",pic:"082")],
+             [(name:"あおさと海苔の赤だし",pic:"083"),(name:"あさりの赤だし",pic:"084"),(name:"魚のアラの赤だし",pic:"085"),(name:"あおさと海苔の味噌汁",pic:"086"),(name:"あさりの味噌汁",pic:"087")],
+             [(name:"なんこつ唐揚げ",pic:"088"), (name:"フライドポテト",pic:"089"),(name:"たこの唐揚げ",pic:"090"),(name:"天ぷら盛り合わせ",pic:"091"),(name:"かぼちゃの天ぷら",pic:"092"),(name:"鶏モモの唐揚げ",pic:"093")],
+             [(name:"枝豆",pic:"094"), (name:"しらすとパンチェッタのサラダ",pic:"095"),(name:"茶碗蒸し",pic:"096"),(name:"だし巻き卵",pic:"097")]],
+            //デザート
+            [[(name:"練乳いちごパフェ",pic:"098"), (name:"チョコムースバナナパフェ",pic:"099"),(name:"カタラーナアイスブリュレ",pic:"100"),(name:"北海道ミルクレープメルバ",pic:"101"),(name:"わらびもち",pic:"102"),(name:"大学いも",pic:"103")],
+             [(name:"ショコラケーキリッチ",pic:"104"),(name:"ニューヨークイチゴケーキ",pic:"105"),(name:"北海道ミルクレープ",pic:"106"),(name:"とろっとプリン",pic:"107"),(name:"北海道バニラアイス",pic:"108"),(name:"ベルギーショコラアイス",pic:"109")],
+             [(name:"フローズンマンゴー",pic:"110"),(name:"懐かしのメロンシャーベット",pic:"111")]],
+            //ソフトドリンク・アルコール
+            [[(name:"生ビール",pic:"112"), (name:"角ハイボール",pic:"113"),(name:"レモンサワー",pic:"114"),(name:"大吟醸",pic:"115"),(name:"生貯蔵酒",pic:"116"),(name:"ノンアルコールビール",pic:"117")],
+             [(name:"りんごジュース",pic:"118"),(name:"アイスコーヒー",pic:"119"),(name:"アイスカフェラテ",pic:"120"),(name:"ホットコーヒー",pic:"121"),(name:"ホットカフェラテ",pic:"122")]],
+    ]
+
+
+
+    //商品選択後
+    func st(sn:String,pn:String){
+        if i < 3{
+            if box[0].name == ""{
+                i = 0
+                box[i].name = sn
+                box[i].qty = 1
+                box[i].view = pn
+            }else if  box[1].name == ""{
+                i = 1
+                box[i].name = sn
+                box[i].qty = 1
+                box[i].view = pn
+            }else if  box[2].name == ""{
+                i = 2
+                box[i].name = sn
+                box[i].qty = 1
+                box[i].view = pn
+            }
+            countMenu[0].now = "off"
+            countMenu[1].now = "off"
+            countMenu[2].now = "off"
+        }
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // 起動直後に遷移する画面をRootViewControllerに指定する
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = hakken()
+        self.window?.rootViewController = Ticket()
         self.window?.makeKeyAndVisible()
         return true
     }
