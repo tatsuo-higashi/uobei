@@ -22,6 +22,7 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         myImageView = UIImageView(frame: CGRect(x: 0,y: 0,width: 1024,height: 768))
         myImageView.image = UIImage(ciImage: myInputImage!)
         self.view.addSubview(myImageView)
+        
         //クラスをインスタンス化
         let button = makeButton()//m:backgrand,e:picture,e:border
         let label = makeLabel()//o:border,o1:backgrand,o2:0でalpha無効,ic:300でむテキスト無効
@@ -62,14 +63,13 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             self.view.addSubview(label.make(xv:215 + (appDelegate.maskFlag3*380),yv:440,wv:365,hv:100,f:50,o:0,o1:2,o2:0.3, ic: ""))
         }
         
-        
-        
         func didReceiveMemoryWarning() {
             super.didReceiveMemoryWarning()
             // Dispose of any resources that can be recreated.
         }
     }
 
+    //ボタンイベント
     @objc func selection(sender: UIButton){
         let view = viewSetting()
         if sender.tag <= 7 {
@@ -117,7 +117,6 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             appDelegate.maskFlag3 = sender.tag - 16
             viewDidLoad()
             audioPlayerInstance.play()
-
         case 18:
             if flag[0] && flag[1] && flag[2] {
                 for i in 0...2{
@@ -129,18 +128,16 @@ class Accounting: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 self.present(view.viewSet(view: First(), anime: .flipHorizontal), animated: false, completion: nil)
                 audioPlayerInstance.play()
             }else{
+                //ポップアップ表示
                 let ngalert = UIAlertController(title: "未入力があります", message: "", preferredStyle: .alert)
                 ngalert.view.setNeedsLayout() // シミュレータの種類によっては、これがないと警告が発生
-                // アラート表示
                 self.present(ngalert, animated: true, completion: {
-                    // アラートを閉じる
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                     ngalert.dismiss(animated: true, completion: nil)
                     })
                 })
                 break
             }
-
         case 19:
             for i in 0...2{
                 flag[i] = false

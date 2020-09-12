@@ -1,41 +1,87 @@
-
+import Foundation
+import AVFoundation
 import UIKit
 
-class Camera: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
-    @IBAction func button(_ sender: Any) {
-        //アルバムを起動
-        changeImage()
-    }
-    
-    func changeImage() {
-        //アルバムを指定
-        //SourceType.camera：カメラを指定
-        //SourceType.photoLibrary：アルバムを指定
-        let sourceType:UIImagePickerController.SourceType = UIImagePickerController.SourceType.photoLibrary
-        //アルバムを立ち上げる
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary){
-            // インスタンスの作成
-            let cameraPicker = UIImagePickerController()
-            cameraPicker.sourceType = sourceType
-            cameraPicker.delegate = self
-            //アルバム画面を開く
-            self.present(cameraPicker, animated: true, completion: nil)
-        }
-    }
+
+class Camera: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate, AVCaptureMetadataOutputObjectsDelegate{
+
+    // カメラやマイクの入出力を管理するオブジェクトを生成
+    private let session = AVCaptureSession()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
         
-    //アルバム画面で写真を選択した時
-    func imagePickerController(_ picker: UIImagePickerController,didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        //imageにアルバムで選択した画像が格納される
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            //ImageViewに表示
-            self.imageView.image = image
-            //アルバム画面を閉じる
-            self.dismiss(animated: true, completion: nil)
+        // カメラやマイクのデバイスそのものを管理するオブジェクトを生成（ここではワイドアングルカメラ・ビデオ・背面カメラを指定）
+        let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera],
+                                                                mediaType: .video,
+                                                                position: .back)
+        // ワイドアングルカメラ・ビデオ・背面カメラに該当するデバイスを取得
+        let devices = discoverySession.devices
+        
+        //　該当するデバイスのうち最初に取得したものを利用する
+        if let backCamera = devices.first {
+            do {
+                // QRコードの読み取りに背面カメラの映像を利用するための設定
+                let deviceInput = try AVCaptureDeviceInput(device: backCamera)
+                
+                if self.session.canAddInput(deviceInput) {
+                    self.session.addInput(deviceInput)
+                    
+                    // 背面カメラの映像からQRコードを検出するための設定
+                    let metadataOutput = AVCaptureMetadataOutput()
+                    
+                    if self.session.canAddOutput(metadataOutput) {
+                        self.session.addOutput(metadataOutput)
+                        
+                        metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+                        metadataOutput.metadataObjectTypes = [.qr]
+                        
+                        // 背面カメラの映像を画面に表示するためのレイヤーを生成
+                        let previewLayer = AVCaptureVideoPreviewLayer(session: self.session)
+                        previewLayer.frame = self.view.bounds
+                        previewLayer.videoGravity = .resizeAspectFill
+                        self.view.layer.addSublayer(previewLayer)
+                        
+                        // 読み取り開始
+                        self.session.startRunning()
+                    }
+                }
+            } catch {
+                print("Error occured while creating video device input: \(error)")
+            }
         }
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        for metadata in metadataObjects as! [AVMetadataMachineReadableCodeObject] {
+            // QRコードのデータかどうかの確認
+            if metadata.type != .qr { continue }
+            
+            // QRコードの内容が空かどうかの確認
+            if metadata.stringValue == nil { continue }
+
+            /*
+             このあたりで取得したQRコードを使ってゴニョゴニョする
+             読み取りの終了・再開のタイミングは用途によって制御が異なるので注意
+             以下はQRコードに紐づくWebサイトをSafariで開く例
+             */
+            
+            // URLかどうかの確認
+            if let url = URL(string: metadata.stringValue!) {
+                // 読み取り終了
+                self.session.stopRunning()
+                // QRコードに紐付いたURLをSafariで開く
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                
+                break
+            }
+        }
+    }
 }
+

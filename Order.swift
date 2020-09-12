@@ -266,25 +266,25 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             audioPlayerInstance.play()
         case 13://商品名(1段目)
             i = 0
-            appDelegate.count_t[0].now = "on"
-            appDelegate.count_t[1].now = "off"
-            appDelegate.count_t[2].now = "off"
+            appDelegate.countType[0].now = "on"
+            appDelegate.countType[1].now = "off"
+            appDelegate.countType[2].now = "off"
             viewDidLoad()
         case 14://商品名(2段目)
             i = 1
-            appDelegate.count_t[0].now = "off"
-            appDelegate.count_t[1].now = "on"
-            appDelegate.count_t[2].now = "off"
+            appDelegate.countType[0].now = "off"
+            appDelegate.countType[1].now = "on"
+            appDelegate.countType[2].now = "off"
             viewDidLoad()
         case 15://商品名(3段目)
             i = 2
-            appDelegate.count_t[0].now = "off"
-            appDelegate.count_t[1].now = "off"
-            appDelegate.count_t[2].now = "on"
+            appDelegate.countType[0].now = "off"
+            appDelegate.countType[1].now = "off"
+            appDelegate.countType[2].now = "on"
             viewDidLoad()
         case 18://注文
             appDelegate.dishSum += appDelegate.box[0].qty + appDelegate.box[1].qty + appDelegate.box[2].qty
-            appDelegate.qr_string = "注文は\(appDelegate.dishSum)皿で会計金額は\(appDelegate.dishSum * 110)円です"
+            appDelegate.qrString = "注文は\(appDelegate.dishSum)皿で会計金額は\(appDelegate.dishSum * 110)円です"
             for i in 0...2{
                 if "\(appDelegate.box[i].name)" != ""{
                     let history = (name:"\(appDelegate.box[i].name)", num:appDelegate.box[i].qty)
@@ -299,7 +299,7 @@ class Order: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 dishCount!.dish = appDelegate.dishSum
             }
             imageSetteng(picture: "end.jpg")
-            appDelegate.count_t = [(0,""),(0,""),(0,"")]
+            appDelegate.countType = [(0,""),(0,""),(0,"")]
             appDelegate.box = [("",0,"kara.png"),("",0,"kara.png"),("",0,"kara.png")]
             i = 0
             audioPlayerInstance.play()

@@ -60,15 +60,15 @@ extension MasterViewController: UITableViewDelegate {
         switch sections[indexPath.section].items[indexPath.row] {
             case "アカウント":
                 if (indexPath.section==0){
-                    appDelegate.view_setting = "アカウント"
+                    appDelegate.viewType = "アカウント"
                 }
             case "二次元コード":
                 if (indexPath.section==0){
-                    appDelegate.view_setting = "二次元コード"
+                    appDelegate.viewType = "二次元コード"
                 }
             case "サウンド":
                 if (indexPath.section==0){
-                    appDelegate.view_setting = "サウンド"
+                    appDelegate.viewType = "サウンド"
                 }
             case "年代別来店割合":
                 if (indexPath.section==2){
@@ -80,7 +80,7 @@ extension MasterViewController: UITableViewDelegate {
                             // アラートに含まれるすべてのテキストフィールドを調べる
                             for textField in textFields {
                                 if textField.text! == "1234"{
-                                       appDelegate.view_setting = "年代別来店割合"
+                                       appDelegate.viewType = "年代別来店割合"
                                        self.present(view.viewSet(view: Test(), anime: .flipHorizontal), animated: false, completion: nil)
                                 }else if textField.text! != "1234"{
                                     let ngalert = UIAlertController(title: "パスワードが違います", message: "", preferredStyle: .alert)
@@ -119,11 +119,11 @@ extension MasterViewController: UITableViewDelegate {
                 }
             case "年代別平均皿数":
                 if (indexPath.section==2){
-                    appDelegate.view_setting = "年代別平均皿数"
+                    appDelegate.viewType = "年代別平均皿数"
                 }
             case "realm":
                 if (indexPath.section==3){
-                    appDelegate.view_setting = "realm"
+                    appDelegate.viewType = "realm"
                 }
             default:
                 break

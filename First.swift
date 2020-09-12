@@ -6,15 +6,16 @@ import RealmSwift
 
 
 class First: UIViewController {
-    
     let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
-    // 画像を設定する.
-    let myInputImage = CIImage(image: UIImage(named: "first.jpeg")!)
-    // ImageViewを.定義する.
-    var myImageView: UIImageView!
+
     override func viewDidLoad() {
+        
         loadView()//videoplayerを破棄
         super.viewDidLoad()
+        // 画像を設定する.
+        let myInputImage = CIImage(image: UIImage(named: "first.jpeg")!)
+        // ImageViewを.定義する.
+        var myImageView: UIImageView!
         audioPlayerInstance.prepareToPlay()
         // 起動直後に遷移させる画面を宣言
         let launchViewController: UIViewController = Menu()
@@ -33,8 +34,9 @@ class First: UIViewController {
         button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
         self.view.addSubview(button)
     }
+    
     @objc func play(){
-        let path = Bundle.main.path(forResource: "\(appDelegate.movie_num)", ofType: "mp4")
+        let path = Bundle.main.path(forResource: "\(appDelegate.movieNum)", ofType: "mp4")
         let fileURL = NSURL(fileURLWithPath: path!)
         let avAsset = AVAsset(url: fileURL as URL)
         // AVPlayerに再生させるアイテムを生成.
@@ -42,7 +44,7 @@ class First: UIViewController {
         // AVPlayerを生成.
         let videoPlayer = AVPlayer(playerItem: playerItem)
         let playerLayer = AVPlayerLayer(player: videoPlayer)
-        videoPlayer.volume = appDelegate.movie_volume
+        videoPlayer.volume = appDelegate.movieVolume
         // 出力先判定
         func IsHeadSetConnected() -> Bool{
             let route = AVAudioSession.sharedInstance().currentRoute;

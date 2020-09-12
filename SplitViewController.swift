@@ -1,68 +1,64 @@
 import UIKit
+import AVFoundation//オーディオがらみ
+import AVKit
+import Foundation
 import RealmSwift
+import CoreImage
+
+
+//グローバルにする必要ある
 
 struct Section2 {
     var title: String
     var items: [String]
 }
+
 extension Section2 {
     static func make() -> [Section] {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let realm = try! Realm()
-        switch appDelegate.view_setting{
-        case "アカウント":
-            return[Section(title: "アカウント", items: ["席番号", "到着時間"])]//sections[0].count=1
-        case "二次元コード":
-            return[Section(title: "二次元コード", items: ["バーコード", "QRコード"])]//sections[0].count=1
-        case "サウンド":
-            return[Section(title: "サウンド", items: ["タッチ音", "スクリーンセーバ"]),//sections[0].count=3,sections[2][0].items.count=1
-                Section(title: "サウンドON-OFF", items: ["タッチ音", "スクリーンセーバ"]),//sections[2][1].items.count=4
-                Section(title: "音量", items: ["タッチ音", "スクリーンセーバ"])]//sections[2][2].items.count=2
-        case "年代別来店割合":
-            return[Section(title:"年代別来店割合",items:["12歳以下男性","12歳以下女性","13-19歳男性","13-19歳女性","20-29歳男性","20-29歳女性","30-49歳男性","30-49歳女性","50歳以上男性","50歳以上女性"])]
-         case "年代別平均皿数":
-            return[Section(title:"年代別平均皿数",items:["12歳以下男性","12歳以下女性","13-19歳男性","13-19歳女性","20-29歳男性","20-29歳女性","30-49歳男性","30-49歳女性","50歳以上男性","50歳以上女性"])]
-        case "realm":
+        switch appDelegate.viewType{
+            case "アカウント":
+                return[Section(title: "アカウント", items: ["席番号", "到着時間"])]//sections[0].count=1
+            case "二次元コード":
+                return[Section(title: "二次元コード", items: ["バーコード", "QRコード"])]//sections[0].count=1
+            case "サウンド":
+                return[Section(title: "サウンド", items: ["タッチ音", "スクリーンセーバ"]),//sections[0].count=3,sections[2][0].items.count=1
+                    Section(title: "サウンドON-OFF", items: ["タッチ音", "スクリーンセーバ"]),//sections[2][1].items.count=4
+                    Section(title: "音量", items: ["タッチ音", "スクリーンセーバ"])]//sections[2][2].items.count=2
+            case "年代別来店割合":
+                return[Section(title:"年代別来店割合",items:["12歳以下男性","12歳以下女性","13-19歳男性","13-19歳女性","20-29歳男性","20-29歳女性","30-49歳男性","30-49歳女性","50歳以上男性","50歳以上女性"])]
+             case "年代別平均皿数":
+                return[Section(title:"年代別平均皿数",items:["12歳以下男性","12歳以下女性","13-19歳男性","13-19歳女性","20-29歳男性","20-29歳女性","30-49歳男性","30-49歳女性","50歳以上男性","50歳以上女性"])]
+            case "realm":
             
-            return[Section(title: "guestData", items: ["入室時間", "退出時間","大人","子供","席タイプ","皿数"]),
-                   Section(title: "appSetting", items: ["二次元コード","タッチ音", "スクリーンセーバ",])]//sections[0].count=3,sections[2][0].items.count=1
-            
-        default:
-            return[Section(title: "アカウント", items: ["席番号", "到着時間"])]//sections[0].count=1
+                return[Section(title: "guestData", items: ["入室時間", "退出時間","大人","子供","席タイプ","皿数"]),
+                       Section(title: "appSetting", items: ["二次元コード","タッチ音","スクリーンセーバ",])]//sections[0].count=3,sections[2][0].items.count=1
+            default:
+                return[Section(title: "アカウント", items: ["席番号", "到着時間"])]//sections[0].count=1
         }
     }
 }
-/*extension Section2 {
- static func make() -> [[Section]] {
- return [
- //sections.count = 3
- [Section(title: "アカウント", items: ["席番号", "到着時間"])],//sections[0].count=1
- [Section(title: "二次元コード", items: ["バーコード", "QRコード","バーコード"])],//sections[0].count=1
- [Section(title: "サウンド", items: ["タッチ音"]),//sections[0].count=3,sections[2][0].items.count=1
- Section(title: "サウンドON-OFF", items: ["タッチ音", "スクリーンセーバ","バーコード", "QRコード"]),//sections[2][1].items.count=4
- Section(title: "音量", items: ["タッチ音", "スクリーンセーバ"])//sections[2][2].items.count=2
- ]
- ]
- }
- }*/
+
 class SplitViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     //pickerView関連
     let pickerView1 = UIPickerView()
-    
     let pickerView2 = UIPickerView()
-    
-    
     var label = UILabel()
+    private var tableView = UITableView()
+    private var sections = Section2.make()
     let dataList1 = [
         "button01a","button01b","button01c"
     ]
     let dataList2 = [
         "movie01","movie02","movie03"
     ]
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int ) -> Int {
         if pickerView == pickerView1{
             return dataList1.count
@@ -70,6 +66,7 @@ class SplitViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             return dataList2.count
         }
     }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == pickerView1{
             return dataList1[row]
@@ -77,27 +74,31 @@ class SplitViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             return dataList2[row]
         }
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView == pickerView1{
-            print("pickerview1")
-            print("row: \(row)")
-            appDelegate.sound_num=dataList1[row]
+            appDelegate.soundNum=dataList1[row]
             appDelegate.pickerView1Ini = row
         }else{
-            print("pickerview2")
-            print("row: \(row)")
-            appDelegate.movie_num=dataList2[row]
+            appDelegate.movieNum=dataList2[row]
             appDelegate.pickerView2Ini = row
         }
     }
-    private var tableView = UITableView()
     
-    private var sections = Section2.make()
-    //一旦終わり
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        let soundFilePath = Bundle.main.path(forResource: "\(appDelegate.soundNum)", ofType: "mp3")!
+        let sound:URL = URL(fileURLWithPath: soundFilePath)
         
-        //picker関連
+        do {
+            audioPlayerInstance = try AVAudioPlayer(contentsOf: sound, fileTypeHint:nil)
+        } catch {
+            print("AVAudioPlayerインスタンス作成でエラー")
+        }
+        audioPlayerInstance.prepareToPlay()
+        audioPlayerInstance.volume = appDelegate.touchVolume//picker関連
+        
         // ViewContorller 背景色
         self.view.backgroundColor = UIColor.white
         // PickerView のサイズと位置
@@ -116,25 +117,19 @@ class SplitViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         pickerView1.selectRow(appDelegate.pickerView1Ini, inComponent: 0, animated: true)
         pickerView2.selectRow(appDelegate.pickerView2Ini, inComponent: 0, animated: true)
         
-        
-        if appDelegate.view_setting == "年代別来店割合" || appDelegate.view_setting == "年代別平均皿数"{
-            // フォントサイズ
-            label.font = UIFont.systemFont(ofSize: 60)
-            // テキストを中央寄せにする
+        // フォントサイズ
+        label.font = UIFont.systemFont(ofSize: 60)
+        view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
+        let screenWidth: CGFloat = UIScreen.main.bounds.width //画面の幅
+        let screenHeight: CGFloat = UIScreen.main.bounds.height//画面の高さ
+        if appDelegate.viewType == "年代別来店割合" || appDelegate.viewType == "年代別平均皿数"{
+            // テキストを右寄せにする
             label.textAlignment = NSTextAlignment.right
-            
-            view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
-            let screenWidth: CGFloat = UIScreen.main.bounds.width //画面の幅
-            let screenHeight: CGFloat = UIScreen.main.bounds.height//画面の高さ
             tableView = UITableView(frame: CGRect(x:460, y: 0, width: screenWidth/5, height: screenHeight), style: .grouped)
         }else{
-            // フォントサイズを大きく
-            label.font = UIFont.systemFont(ofSize: 60)
             // テキストを中央寄せにする
             label.textAlignment = NSTextAlignment.center
             view.backgroundColor = UIColor(red: 239 / 255, green: 239 / 255, blue: 244 / 255, alpha: 1)
-            let screenWidth: CGFloat = UIScreen.main.bounds.width //画面の幅
-            let screenHeight: CGFloat = UIScreen.main.bounds.height//画面の高さ
             tableView = UITableView(frame: CGRect(x:0, y: 0, width: screenWidth/2 + 200, height: screenHeight), style: .grouped)
         }
         tableView.dataSource = self
@@ -148,12 +143,15 @@ class SplitViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         self.navigationItem.rightBarButtonItems = [doneBarButtonItem]
     }
 }
+
+
 extension SplitViewController: UITableViewDataSource {
     
     //セクション数
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].items.count
     }
@@ -199,7 +197,7 @@ extension SplitViewController: UITableViewDataSource {
         if cell.accessoryView == nil {
         }
       
-        if appDelegate.view_setting == "アカウント" {
+        if appDelegate.viewType == "アカウント" {
             if indexPath.row == 0{
                 cell.accessoryView = UISwitch()
             }
@@ -207,13 +205,13 @@ extension SplitViewController: UITableViewDataSource {
                 cell.accessoryView = UISwitch()
             }
         }
-        if appDelegate.view_setting == "二次元コード" {
+        if appDelegate.viewType == "二次元コード" {
             if indexPath.row == 0{
                 // UISwitch値が変更された時に呼び出すメソッドの設定
                 let testSwitch:UISwitch = UISwitch()
                 testSwitch.addTarget(self, action: #selector(changeSwitch), for: UIControl.Event.valueChanged)
                 // UISwitchの状態をオンに設定
-                if appDelegate.qr_sta == "qr"{
+                if appDelegate.qrStatus == "qr"{
                     testSwitch.isOn = false
                 }else{
                     testSwitch.isOn = true
@@ -226,7 +224,7 @@ extension SplitViewController: UITableViewDataSource {
                 let testSwitch:UISwitch = UISwitch()
                 testSwitch.addTarget(self, action: #selector(changeSwitch), for: UIControl.Event.valueChanged)
                 // UISwitchの状態をオンに設定
-                if appDelegate.qr_sta == "qr"{
+                if appDelegate.qrStatus == "qr"{
                     testSwitch.isOn = true
                 }else{
                     testSwitch.isOn = false
@@ -235,7 +233,7 @@ extension SplitViewController: UITableViewDataSource {
                 cell.accessoryView = testSwitch
             }
         }
-        if appDelegate.view_setting == "サウンド" {
+        if appDelegate.viewType == "サウンド" {
             if indexPath.section==0 && indexPath.row == 0{
                 cell.accessoryView = pickerView1
             }
@@ -246,7 +244,7 @@ extension SplitViewController: UITableViewDataSource {
                 let testSwitch:UISwitch = UISwitch()
                 testSwitch.addTarget(self, action: #selector(changeSwitch), for: UIControl.Event.valueChanged)
                 // UISwitchの状態をオンに設定
-                if appDelegate.touch_volume != 0{
+                if appDelegate.touchVolume != 0{
                     testSwitch.isOn = true
                 }else{
                     testSwitch.isOn = false
@@ -258,7 +256,7 @@ extension SplitViewController: UITableViewDataSource {
                 let testSwitch:UISwitch = UISwitch()
                 testSwitch.addTarget(self, action: #selector(changeSwitch), for: UIControl.Event.valueChanged)
                 // UISwitchの状態をオンに設定
-                if appDelegate.movie_volume != 0{
+                if appDelegate.movieVolume != 0{
                     testSwitch.isOn = true
                 }else{
                     testSwitch.isOn = false
@@ -270,7 +268,7 @@ extension SplitViewController: UITableViewDataSource {
                 let slider = UISlider(frame: CGRect(x:200, y: 20, width: 300, height:20))
                 slider.minimumValue = 0.0
                 slider.maximumValue = 1.0
-                slider.value = appDelegate.touch_volume
+                slider.value = appDelegate.touchVolume
                 slider.addTarget(self, action: #selector(sliderDidEndSliding_t(_:)), for: [.touchUpInside, .touchUpOutside])
                 cell.accessoryView = slider
             }
@@ -278,17 +276,16 @@ extension SplitViewController: UITableViewDataSource {
                 let slider = UISlider(frame: CGRect(x:200, y: 20, width: 300, height:20))
                 slider.minimumValue = 0.0
                 slider.maximumValue = 1.0
-                slider.value = appDelegate.movie_volume
+                slider.value = appDelegate.movieVolume
                 slider.addTarget(self, action: #selector(sliderDidEndSliding_m(_:)), for: [.touchUpInside, .touchUpOutside])
                 cell.accessoryView = slider
             }
+            
         }
-    
         
-        if appDelegate.view_setting == "年代別来店割合"{
+        if appDelegate.viewType == "年代別来店割合"{
             let realm = try! Realm()
             let label = makeLabel()
-            var nilCou = 0
             let results = realm.objects(allData.self)
             var dictionary : [String:Int] = ["12歳以下男性":0,"12歳以下女性":0,"13-19歳男性":0,"13-19歳女性":0,"20-29歳男性":0,"20-29歳女性":0,"30-49歳男性":0,"30-49歳女性":0,"50歳以上男性":0,"50歳以上女性":0]
             let genArray : [String] = ["12歳以下男性","12歳以下女性","13-19歳男性","13-19歳女性","20-29歳男性","20-29歳女性","30-49歳男性","30-49歳女性","50歳以上男性","50歳以上女性"]
@@ -297,15 +294,12 @@ extension SplitViewController: UITableViewDataSource {
             
             for i in 0...results.count - 1 {
                 if dictionary[results[i].generation] == nil {
-                    nilCou += 1
                     continue
                 }else{
                     dictionary[results[i].generation]! += 1
                 }
                 dictionary.updateValue(dictionary[results[i].generation]!, forKey: results[i].generation)
             }
-            print(results.count)
-            print("nilの数\(nilCou)")
 
             for i in 0...9{
                 if indexPath.section==0 && indexPath.row == i{
@@ -313,9 +307,8 @@ extension SplitViewController: UITableViewDataSource {
                     generationLabel.textColor = colorArray[i]
                     cell.accessoryView = generationLabel
                 }
-               
-                                
             }
+            
             super.viewWillAppear(true)
             let pieChartView = PieChartView()
 
@@ -335,11 +328,11 @@ extension SplitViewController: UITableViewDataSource {
             view.addSubview(pieChartView)
         }
         
-        if appDelegate.view_setting == "年代別平均皿数"{
-                   let realm = try! Realm()
-                   let label = makeLabel()
-                   var nilCou = 0
-                   let results = realm.objects(allData.self)
+        if appDelegate.viewType == "年代別平均皿数"{
+            let realm = try! Realm()
+            let label = makeLabel()
+            var nilCou = 0
+            let results = realm.objects(allData.self)
             var countDic : [String:Int] = ["12歳以下男性":0,"12歳以下女性":0,"13-19歳男性":0,"13-19歳女性":0,"20-29歳男性":0,"20-29歳女性":0,"30-49歳男性":0,"30-49歳女性":0,"50歳以上男性":0,"50歳以上女性":0]
             var dishDic : [String:Int] = ["12歳以下男性":0,"12歳以下女性":0,"13-19歳男性":0,"13-19歳女性":0,"20-29歳男性":0,"20-29歳女性":0,"30-49歳男性":0,"30-49歳女性":0,"50歳以上男性":0,"50歳以上女性":0]
                    let genArray : [String] = ["12歳以下男性","12歳以下女性","13-19歳男性","13-19歳女性","20-29歳男性","20-29歳女性","30-49歳男性","30-49歳女性","50歳以上男性","50歳以上女性"]
@@ -389,7 +382,7 @@ extension SplitViewController: UITableViewDataSource {
                    view.addSubview(pieChartView)
                }
         let label = makeLabel()//o:border,o1:backgrand,o2:0でalpha無効,ic:300でむテキスト無効
-        if appDelegate.view_setting == "realm" {
+        if appDelegate.viewType == "realm" {
             let realm = try! Realm()
             let obj = realm.objects(guestData.self).last
             if indexPath.section==0 && indexPath.row == 0{
@@ -417,15 +410,15 @@ extension SplitViewController: UITableViewDataSource {
                 cell.accessoryView = label3
             }
             if indexPath.section==1 && indexPath.row == 0{
-                let label3 = label.make(xv:200,yv:20,wv:300,hv:30,f:30,o:0,o1:0,o2:0.3,ic:"\(appDelegate.qr_sta)")
+                let label3 = label.make(xv:200,yv:20,wv:300,hv:30,f:30,o:0,o1:0,o2:0.3,ic:"\(appDelegate.qrStatus)")
                 cell.accessoryView = label3
             }
             if indexPath.section==1 && indexPath.row == 1{
-                let label3 = label.make(xv:200,yv:20,wv:300,hv:30,f:30,o:0,o1:0,o2:0.3,ic:"\(appDelegate.sound_num)")
+                let label3 = label.make(xv:200,yv:20,wv:300,hv:30,f:30,o:0,o1:0,o2:0.3,ic:"\(appDelegate.soundNum)")
                 cell.accessoryView = label3
             }
             if indexPath.section==1 && indexPath.row == 2{
-                let label3 = label.make(xv:200,yv:20,wv:300,hv:30,f:30,o:0,o1:0,o2:0.3,ic:"\(appDelegate.movie_num)")
+                let label3 = label.make(xv:200,yv:20,wv:300,hv:30,f:30,o:0,o1:0,o2:0.3,ic:"\(appDelegate.movieNum)")
                 cell.accessoryView = label3
             }
         }
@@ -453,12 +446,23 @@ extension SplitViewController: UITableViewDelegate {
     //doneタップ時
     @objc func doneBarButtonTapped(_ sender: UIBarButtonItem) {
         let view = viewSetting()
+        let soundFilePath = Bundle.main.path(forResource: "\(appDelegate.soundNum)", ofType: "mp3")!
+        let sound:URL = URL(fileURLWithPath: soundFilePath)
+        
+        do {
+            audioPlayerInstance = try AVAudioPlayer(contentsOf: sound, fileTypeHint:nil)
+        } catch {
+            print("AVAudioPlayerインスタンス作成でエラー")
+        }
+        // 再生準備
+        audioPlayerInstance.prepareToPlay()
+        audioPlayerInstance.volume = appDelegate.touchVolume
         self.present(view.viewSet(view: ViewController(), anime: .flipHorizontal), animated: false, completion: nil)
         audioPlayerInstance.play()
     }
     @objc func sliderDidEndSliding_t(_ sender: UISlider) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.touch_volume = sender.value
+        appDelegate.touchVolume = sender.value
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         // rootViewControllerに入れる
         appDelegate.window?.rootViewController = Test()
@@ -467,7 +471,7 @@ extension SplitViewController: UITableViewDelegate {
     }
     @objc func sliderDidEndSliding_m(_ sender: UISlider) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.movie_volume = sender.value
+        appDelegate.movieVolume = sender.value
         appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
         //　Storyboardを指定
         // rootViewControllerに入れる
@@ -480,10 +484,10 @@ extension SplitViewController: UITableViewDelegate {
         // UISwitch値を取得
         switch sender.tag{
         case 0://バーコードの値が変わった時
-            if appDelegate.qr_sta == "qr"{
-                appDelegate.qr_sta = "bc"
+            if appDelegate.qrStatus == "qr"{
+                appDelegate.qrStatus = "bc"
             }else{
-                appDelegate.qr_sta = "qr"
+                appDelegate.qrStatus = "qr"
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
@@ -492,10 +496,10 @@ extension SplitViewController: UITableViewDelegate {
             // 表示
             appDelegate.window?.makeKeyAndVisible()
         case 1://QRコードの値が変わった時
-            if appDelegate.qr_sta == "qr"{
-                appDelegate.qr_sta = "bc"
+            if appDelegate.qrStatus == "qr"{
+                appDelegate.qrStatus = "bc"
             }else{
-                appDelegate.qr_sta = "qr"
+                appDelegate.qrStatus = "qr"
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
            
@@ -504,10 +508,10 @@ extension SplitViewController: UITableViewDelegate {
             // 表示
             appDelegate.window?.makeKeyAndVisible()
         case 2://サウンドON-OFFのタッチ音値が変わった時
-            if appDelegate.touch_volume == 0{
-                appDelegate.touch_volume = 0.5
+            if appDelegate.touchVolume == 0{
+                appDelegate.touchVolume = 0.5
             }else{
-                appDelegate.touch_volume = 0.0
+                appDelegate.touchVolume = 0.0
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             //　Storyboardを指定
@@ -516,10 +520,10 @@ extension SplitViewController: UITableViewDelegate {
             // 表示
             appDelegate.window?.makeKeyAndVisible()
         case 3://サウンドON-OFFのスクリーン音値が変わった時
-            if appDelegate.movie_volume == 0{
-                appDelegate.movie_volume = 0.5
+            if appDelegate.movieVolume == 0{
+                appDelegate.movieVolume = 0.5
             }else{
-                appDelegate.movie_volume = 0.0
+                appDelegate.movieVolume = 0.0
             }
             appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
             appDelegate.window?.rootViewController = Test()

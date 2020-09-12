@@ -269,7 +269,7 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             viewDidLoad()
             appDelegate.dishSum = 0
             appDelegate.choise = 0
-            appDelegate.tag_flag2 = 0
+            appDelegate.tagFlag2 = 0
             //realm書き込み
             let date = Date()
             let dateAndTime = date.formattedDateWith(style: .time)
@@ -283,13 +283,13 @@ class Reception: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             }
             let saveObj = realm.objects(appSetting.self).last
             try! realm.write {
-                saveObj?.touch_volume = appDelegate.touch_volume
-                saveObj?.movie_volume = appDelegate.movie_volume
-                saveObj?.volume_m = appDelegate.volume_m
-                saveObj?.volume_m_sta = appDelegate.volume_m_sta
-                saveObj?.volume_v_sta = appDelegate.volume_v_sta
-                saveObj?.sound_num = appDelegate.sound_num
-                saveObj?.movie_num = appDelegate.movie_num
+                saveObj?.touchVolume = appDelegate.touchVolume
+                saveObj?.movieVolume = appDelegate.movieVolume
+                saveObj?.volumeM = appDelegate.volumeM
+                saveObj?.volumeMstatus = appDelegate.volumeMstatus
+                saveObj?.volumeVstatus = appDelegate.volumeVstatus
+                saveObj?.soundNum = appDelegate.soundNum
+                saveObj?.movieNum = appDelegate.movieNum
                 saveObj?.pickerView1Ini = appDelegate.pickerView1Ini
                 saveObj?.pickerView2Ini = appDelegate.pickerView2Ini
             }

@@ -22,7 +22,7 @@ class Call: UIViewController {
         myImageView = UIImageView(frame: self.view.frame)
         myImageView.image = UIImage(ciImage: myInputImage!)
         self.view.addSubview(myImageView)
-        if appDelegate.qr_sta == "bc"{
+        if appDelegate.qrStatus == "bc"{
             let bc = makeBarcord()
             self.view.addSubview(bc.make(string: "12-34")!)
         }else{
@@ -89,7 +89,7 @@ class Call: UIViewController {
         info.orientation = .portrait
         printIntaractionController.printInfo = info
         //印刷する内容
-        printIntaractionController.printingItem = appDelegate.sc_image
+        printIntaractionController.printingItem = appDelegate.scImage
         printIntaractionController.print(to: printer, completionHandler: {
             controller, completed, error in
         })

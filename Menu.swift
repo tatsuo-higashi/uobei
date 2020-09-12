@@ -27,15 +27,15 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
     // レフトスワイプ時に実行される
     @objc func leftSwipeView(sender: UISwipeGestureRecognizer) {
         let tag_flag1 = appDelegate.choise
-        if appDelegate.tag_flag2 < tag_max(choise: tag_flag1)-1{
-            appDelegate.tag_flag2 = appDelegate.tag_flag2 + 1
+        if appDelegate.tagFlag2 < tag_max(choise: tag_flag1)-1{
+            appDelegate.tagFlag2 = appDelegate.tagFlag2 + 1
             viewDidLoad()
         }
     }
     // ライトスワイプ時に実行される
     @objc func rightSwipeView(sender: UISwipeGestureRecognizer) {
-        if appDelegate.tag_flag2  > 0{
-            appDelegate.tag_flag2 = appDelegate.tag_flag2 - 1
+        if appDelegate.tagFlag2  > 0{
+            appDelegate.tagFlag2 = appDelegate.tagFlag2 - 1
             viewDidLoad()
         }
     }
@@ -63,10 +63,10 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         self.view.addSubview(myImageView)
         
         //写真ボタン作成
-        for d in 0..<appDelegate.data[tag_flag1][appDelegate.tag_flag2].count{
+        for d in 0..<appDelegate.data[tag_flag1][appDelegate.tagFlag2].count{
             var e = 0
             if d <= 2{e=0}else{e=1}
-            self.view.addSubview(button.make(xv:30+(220*d)-(660*e),yv:225+(220*e),wv:200,hv:200,f:20,b:appDelegate.data[tag_flag1][appDelegate.tag_flag2][d].pic,c:0+d,d:0,e:1,m:0))
+            self.view.addSubview(button.make(xv:30+(220*d)-(660*e),yv:225+(220*e),wv:200,hv:200,f:20,b:appDelegate.data[tag_flag1][appDelegate.tagFlag2][d].pic,c:0+d,d:0,e:1,m:0))
         }
         //共通ボタン作成
         self.view.addSubview(button.make(xv:30,yv:700,wv:100,hv:50,f:50,b:"戻る",c:50,d:1,e:0,m:1))
@@ -101,11 +101,11 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
             self.view.addSubview(button.make(xv:5+(115*d),yv:90,wv:110,hv:70,f:25,b:appDelegate.tag2[tag_flag1][d],c:25+d,d:1,e:0,m:1))
         }
         //tag2 選択ラベル
-        let r2 = (appDelegate.tag_flag2*115)
+        let r2 = (appDelegate.tagFlag2*115)
         self.view.addSubview(label.make(xv:5+r2,yv:90,wv:110,hv:70,f:50,o:0,o1:2,o2:0.3,ic:""))
         
         //数量用（共通)
-        self.view.addSubview(label.make(xv:870,yv:290,wv:60,hv:60,f:50,o:2,o1:0,o2:0,ic:"\(appDelegate.box[appDelegate.i].qty)"))
+        self.view.addSubview(label.make(xv:870,yv:290,wv:60,hv:60,f:50,o:2,o1:0,o2:0,ic:"\(appDelegate.box[appDelegate.counter].qty)"))
         //数量用（1段目)
         self.view.addSubview(label.make(xv:960,yv:450,wv:60,hv:60,f:50,o:0,o1:0,o2:0,ic:"\(appDelegate.box[0].qty)"))
         //数量用（2段目)
@@ -114,13 +114,13 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         self.view.addSubview(label.make(xv:960,yv:570,wv:60,hv:60,f:50,o:0,o1:0,o2:0,ic:"\(appDelegate.box[2].qty)"))
         
         //商品マスク用view
-        if  appDelegate.count_t[0].now == "on"{
+        if  appDelegate.countType[0].now == "on"{
             self.view.addSubview(label.make(xv:752,yv:445,wv:212,hv:60,f:50,o:0,o1:3,o2:0.5,ic:""))
         }
-        if  appDelegate.count_t[1].now == "on"{
+        if  appDelegate.countType[1].now == "on"{
             self.view.addSubview(label.make(xv:752,yv:505,wv:212,hv:60,f:50,o:0,o1:3,o2:0.5,ic:""))
         }
-        if  appDelegate.count_t[2].now == "on"{
+        if  appDelegate.countType[2].now == "on"{
             self.view.addSubview(label.make(xv:752,yv:565,wv:212,hv:60,f:50,o:0,o1:3,o2:0.5,ic:""))
         }
         //一度に4皿までメッセージ
@@ -133,7 +133,7 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         //右上view
         if appDelegate.box[0].view != ""{
             let view1 = UIImageView(frame: CGRect(x:CGFloat(770), y: CGFloat(80), width: CGFloat(250), height: CGFloat(200)))
-            let v_Image:UIImage = UIImage(named: appDelegate.box[appDelegate.i].view)!
+            let v_Image:UIImage = UIImage(named: appDelegate.box[appDelegate.counter].view)!
             view1.backgroundColor = UIColor.black
             view1.image = v_Image
             self.view.addSubview(view1)
@@ -167,23 +167,23 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
         }
         switch sender.tag{
         case k://写真ボタンを押した時
-            appDelegate.st(sn:appDelegate.data[tag_flag1][appDelegate.tag_flag2][k].name,pn:appDelegate.data[tag_flag1][appDelegate.tag_flag2][k].pic)
+            appDelegate.st(sn:appDelegate.data[tag_flag1][appDelegate.tagFlag2][k].name,pn:appDelegate.data[tag_flag1][appDelegate.tagFlag2][k].pic)
             loadView()
             viewDidLoad()
             audioPlayerInstance.play()
         case 50://戻る
             //tag2の初期化
-            appDelegate.tag_flag2 = 0
+            appDelegate.tagFlag2 = 0
             self.dismiss(animated: false, completion: nil)
             loadView()
             viewDidLoad()
             audioPlayerInstance.play()
         case 51:// +ボタン
-            if appDelegate.box[appDelegate.i].qty < 4{
-                appDelegate.box[appDelegate.i].qty =  appDelegate.box[appDelegate.i].qty+1
+            if appDelegate.box[appDelegate.counter].qty < 4{
+                appDelegate.box[appDelegate.counter].qty =  appDelegate.box[appDelegate.counter].qty+1
                 viewDidLoad()
                 audioPlayerInstance.play()
-            }else if appDelegate.box[appDelegate.i].qty == 4{
+            }else if appDelegate.box[appDelegate.counter].qty == 4{
                 // 画像を設定する.
                 let myInputImage = CIImage(image: UIImage(named: "over.jpeg")!)
                 // ImageViewを定義する.
@@ -198,43 +198,43 @@ class Menu: UIViewController,UITextFieldDelegate,UITabBarDelegate {
                 
             }
         case 52:// −ボタン
-            if  appDelegate.box[appDelegate.i].qty != 0  && appDelegate.box[appDelegate.i].qty > 0{
-                appDelegate.box[appDelegate.i].qty =  appDelegate.box[appDelegate.i].qty-1
+            if  appDelegate.box[appDelegate.counter].qty != 0  && appDelegate.box[appDelegate.counter].qty > 0{
+                appDelegate.box[appDelegate.counter].qty =  appDelegate.box[appDelegate.counter].qty-1
             }
             viewDidLoad()
             audioPlayerInstance.play()
         case 53://注文ボタン
-            appDelegate.i = 0
-            appDelegate.tag_flag2 = 0 //tag2の初期化
+            appDelegate.counter = 0
+            appDelegate.tagFlag2 = 0 //tag2の初期化
             self.present(view.viewSet(view: Order(), anime: .flipHorizontal), animated: false, completion: nil)
             audioPlayerInstance.play()
         case 13://商品名(1段目)
-            appDelegate.i = 0
-            appDelegate.count_t[0].now = "on"
-            appDelegate.count_t[1].now = "off"
-            appDelegate.count_t[2].now = "off"
+            appDelegate.counter = 0
+            appDelegate.countType[0].now = "on"
+            appDelegate.countType[1].now = "off"
+            appDelegate.countType[2].now = "off"
             self.view.addSubview(label.make(xv:752,yv:445,wv:212,hv:60,f:50,o:0,o1:2,o2:0.5,ic:"\(appDelegate.box[2].qty)"))
             viewDidLoad()
         case 14://商品名(2段目)
-            appDelegate.i = 1
-            appDelegate.count_t[0].now = "off"
-            appDelegate.count_t[1].now = "on"
-            appDelegate.count_t[2].now = "off"
+            appDelegate.counter = 1
+            appDelegate.countType[0].now = "off"
+            appDelegate.countType[1].now = "on"
+            appDelegate.countType[2].now = "off"
             self.view.addSubview(label.make(xv:752,yv:505,wv:212,hv:60,f:50,o:0,o1:2,o2:0.5,ic:"\(appDelegate.box[2].qty)"))
             viewDidLoad()
         case 15://商品名(3段目)
-            appDelegate.i = 2
-            appDelegate.count_t[0].now = "off"
-            appDelegate.count_t[1].now = "off"
-            appDelegate.count_t[2].now = "on"
+            appDelegate.counter = 2
+            appDelegate.countType[0].now = "off"
+            appDelegate.countType[1].now = "off"
+            appDelegate.countType[2].now = "on"
             self.view.addSubview(label.make(xv:752,yv:565,wv:212,hv:60,f:50,o:0,o1:2,o2:0.5,ic:"\(appDelegate.box[2].qty)"))
             viewDidLoad()
         case j://tag1
             appDelegate.choise = j-16
-            appDelegate.tag_flag2 = 0
+            appDelegate.tagFlag2 = 0
             viewDidLoad()
         case l://tag2
-            appDelegate.tag_flag2 = (l-25)
+            appDelegate.tagFlag2 = (l-25)
             viewDidLoad()
         default:break
         }

@@ -66,16 +66,16 @@ class guestData:Object{
 
 //realm作成 設定初期値
 class appSetting:Object{
-    @objc dynamic var touch_volume: Float = 0.5
-    @objc dynamic var movie_volume: Float = 0.5
-    @objc dynamic var qr_sta: String = "qr"
-    @objc dynamic var qr_string: String = ""
-    @objc dynamic var volume_m: Float = 0.5
-    @objc dynamic var volume_v: Float = 0.5
-    @objc dynamic var volume_m_sta: String = "on"
-    @objc dynamic var volume_v_sta: String = "on"
-    @objc dynamic var sound_num: String = "button01a"
-    @objc dynamic var movie_num: String = "movie01"
+    @objc dynamic var touchVolume: Float = 0.5
+    @objc dynamic var movieVolume: Float = 0.5
+    @objc dynamic var qrStatus: String = "qr"
+    @objc dynamic var qrString: String = ""
+    @objc dynamic var volumeM: Float = 0.5
+    @objc dynamic var volumeV: Float = 0.5
+    @objc dynamic var volumeMstatus: String = "on"
+    @objc dynamic var volumeVstatus: String = "on"
+    @objc dynamic var soundNum: String = "button01a"
+    @objc dynamic var movieNum: String = "movie01"
     @objc dynamic var pickerView1Ini: Int = 0
     @objc dynamic var pickerView2Ini: Int = 0
 }
@@ -125,56 +125,37 @@ class makeLabel:UILabel{
         return(label)
     }
     func make(xv:Int,yv:Int,wv:Int,hv:Int,f:Int,o:Int,o1:Int,o2:Double,ic:String,al:String)->UILabel{
-         let label = UILabel(frame: CGRect(x:CGFloat(xv), y: CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
-         if al=="c"{
-         label.textAlignment = NSTextAlignment.center
-         }else{
-          label.textAlignment = NSTextAlignment.left
-         }
-         label.adjustsFontSizeToFitWidth = true
-         if o == 2{
-           label.layer.borderWidth = 1.5
-           label.layer.borderColor = UIColor.black.cgColor
-         }
-         label.font = label.font.withSize(CGFloat(f))
-         if ic != ""{
-           label.text = ic
-         }
-         label.numberOfLines = 0
-         label.layer.cornerRadius = 3.0
-         if o1 == 0{
-           label.backgroundColor = UIColor.clear
-         }else if o1 == 1{
-           label.backgroundColor = UIColor.white
-         }else if o1 == 2{
-           label.backgroundColor = UIColor.black
-         }else{
-           label.backgroundColor = UIColor.yellow
-         }
-         if o2 != 0{
-           label.alpha = CGFloat(o2)
-         }
-         return(label)
-       }
-}
-
-//スライダー作成class
-class SliderClass: NSObject {
-    var title: String
-    var subtitle: String
-    var sliderMinimum: Float
-    var sliderMaximum: Float
-    
-    init(title: String, subtitle: String, sliderMinimum: Float, sliderMaximum: Float) {
-        self.title = "a"
-        self.subtitle = "b"
-        self.sliderMinimum = 10
-        self.sliderMaximum = 30
+        let label = UILabel(frame: CGRect(x:CGFloat(xv), y: CGFloat(yv), width: CGFloat(wv), height: CGFloat(hv)))
+        if al=="c"{
+            label.textAlignment = NSTextAlignment.center
+        }else{
+            label.textAlignment = NSTextAlignment.left
+        }
+        label.adjustsFontSizeToFitWidth = true
+        if o == 2{
+            label.layer.borderWidth = 1.5
+            label.layer.borderColor = UIColor.black.cgColor
+        }
+        label.font = label.font.withSize(CGFloat(f))
+        if ic != ""{
+            label.text = ic
+        }
+        label.numberOfLines = 0
+        label.layer.cornerRadius = 3.0
+        if o1 == 0{
+            label.backgroundColor = UIColor.clear
+        }else if o1 == 1{
+            label.backgroundColor = UIColor.white
+        }else if o1 == 2{
+            label.backgroundColor = UIColor.black
+        }else{
+            label.backgroundColor = UIColor.yellow
+        }
+        if o2 != 0{
+            label.alpha = CGFloat(o2)
+        }
+        return(label)
     }
-}
-
-protocol selection {
-    func selection(sender: UIButton)
 }
 
 //ボタン作成class(イメージ有り)
@@ -220,10 +201,7 @@ class makeButton:UIButton,selection{
         button.layer.cornerRadius = 3.0
         button.tag = c
         button.setTitle("\(b)", for: .normal)
-       
-        
         if t == 0{
-            
             button.backgroundColor = UIColor.clear
             button.setImage(picture, for: .normal)
         }else{
@@ -234,9 +212,23 @@ class makeButton:UIButton,selection{
             button.titleLabel?.numberOfLines = 2//0:無限改行,2:2行表示
             button.titleLabel?.font =  UIFont.systemFont(ofSize: 50)
         }
-       
         button.addTarget(self, action: #selector(selection(sender:)), for: .touchUpInside)
         return(button)
+    }
+}
+
+//スライダー作成class
+class SliderClass: NSObject {
+    var title: String
+    var subtitle: String
+    var sliderMinimum: Float
+    var sliderMaximum: Float
+    
+    init(title: String, subtitle: String, sliderMinimum: Float, sliderMaximum: Float) {
+        self.title = "a"
+        self.subtitle = "b"
+        self.sliderMinimum = 10
+        self.sliderMaximum = 30
     }
 }
 
@@ -299,22 +291,10 @@ class makeSound:AVAudioPlayer{
         }
         // 再生準備
         audioPlayerInstance.prepareToPlay()
-        audioPlayerInstance.volume = appDelegate.volume_m
+        audioPlayerInstance.volume = appDelegate.volumeM
         return(audioPlayerInstance)
     }
 }
-
-////ジェスチャー作成class
-//class makeGess:UISwipeGestureRecognizer{
-//    func make()->UISwipeGestureRecognizer{
-//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(Menu.leftSwipeView(sender:)))  //Swift3
-//        // レフトスワイプのみ反応するようにする
-//        leftSwipe.direction = .left
-//        return(leftSwipe)
-//    }
-//}
-
-
 
 //stepper
 class makeStepper:UIStepper{
@@ -332,7 +312,8 @@ class makeStepper:UIStepper{
         return(stepper)
     }
 }
-    //viewの設定
+
+//viewの設定
 class viewSetting{
     func viewSet(view:UIViewController,anime:UIModalTransitionStyle) -> UIViewController{
         let SViewController: UIViewController = view
@@ -344,27 +325,39 @@ class viewSetting{
     }
 }
 
+//ボタンイベントのための抽象メソッド
+protocol selection {
+    func selection(sender: UIButton)
+}
+
+////ジェスチャー作成class
+//class makeGess:UISwipeGestureRecognizer{
+//    func make()->UISwipeGestureRecognizer{
+//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(Menu.leftSwipeView(sender:)))  //Swift3
+//        // レフトスワイプのみ反応するようにする
+//        leftSwipe.direction = .left
+//        return(leftSwipe)
+//    }
+//}
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     var window: UIWindow?
     var choise: Int = 0//メニュー選択
-    var change_flag: Int = 0//設定画面選択
-    var view_setting: String = "アカウント"
+    var viewType: String = "アカウント"
     var history: [(name:String,num:Int)] = []//からの配列
-    var sound_flag: String = "on"
-    var touch_sound: String = "on"
-    var movie_sound: String = "on"
-    var touch_volume: Float = 0.5
-    var movie_volume: Float = 0.5
-    var sc_image: UIImage?
-    var qr_sta: String = "qr"
-    var qr_string: String = ""
-    var volume_m: Float = 0.5
-    var volume_v: Float = 0.5
-    var volume_m_sta: String = "on"
-    var volume_v_sta: String = "on"
-    var sound_num: String = "button01a"
-    var movie_num: String = "movie01"
+    var touchVolume: Float = 0.5
+    var movieVolume: Float = 0.5
+    var scImage: UIImage?
+    var qrStatus: String = "qr"
+    var qrString: String = ""
+    var volumeM: Float = 0.5
+    var volumeV: Float = 0.5
+    var volumeMstatus: String = "on"
+    var volumeVstatus: String = "on"
+    var soundNum: String = "button01a"
+    var movieNum: String = "movie01"
     var pickerView1Ini: Int = 0
     var pickerView2Ini: Int = 0
     var maskFlag: Int = 100
@@ -372,9 +365,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     var maskFlag3: Int = 100
     var geneMaskFlag: Int = 100
     var dishSum = 0
+    var tagFlag2 = 0
+    var counter = 0  //カウント用変数
     
     //メニュー関係
-    var count_t: [(k:Int,now:String)] = [
+    var countType: [(k:Int,now:String)] = [
         (0,""),
         (0,""),
         (0,"")]
@@ -392,11 +387,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         [("麺"), ("味噌汁"),("揚げ物"),("その他")],//サイドメニュー
         [("デザート1"), ("デザート2"),("デザート3")],//デザート
         [("アルコール"), ("ソフトドリンク")],//ドリンク・アルコール
-        
     ]
-
-    var tag_flag2 = 0
-
+    
     let data: [[[(name: String, pic: String)]]] =
         [
             [[(name:"蟹の豪華盛り",pic:"001"), (name:"生タコ梅キュウ",pic:"002"),(name:"よだれ鶏にぎり",pic:"003"),(name:"匠の本格海老マヨ",pic:"004"),(name:"すりながしカレーうどん",pic:"005")]],
@@ -432,36 +424,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
              [(name:"りんごジュース",pic:"118"),(name:"アイスコーヒー",pic:"119"),(name:"アイスカフェラテ",pic:"120"),(name:"ホットコーヒー",pic:"121"),(name:"ホットカフェラテ",pic:"122")]],
     ]
 
-    //カウント用変数
-    var i = 0
-
     //商品選択後
     func st(sn:String,pn:String){
-        if i < 3{
+        if counter < 3{
             if box[0].name == ""{
-                i = 0
-                box[i].name = sn
-                box[i].qty = 1
-                box[i].view = pn
+                counter = 0
+                box[counter].name = sn
+                box[counter].qty = 1
+                box[counter].view = pn
             }else if  box[1].name == ""{
-                i = 1
-                box[i].name = sn
-                box[i].qty = 1
-                box[i].view = pn
+                counter = 1
+                box[counter].name = sn
+                box[counter].qty = 1
+                box[counter].view = pn
             }else if  box[2].name == ""{
-                i = 2
-                box[i].name = sn
-                box[i].qty = 1
-                box[i].view = pn
+                counter = 2
+                box[counter].name = sn
+                box[counter].qty = 1
+                box[counter].view = pn
             }
-            count_t[0].now = "off"
-            count_t[1].now = "off"
-            count_t[2].now = "off"
+            countType[0].now = "off"
+            countType[1].now = "off"
+            countType[2].now = "off"
         }
-}
-
-
-   
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // 起動直後に遷移する画面をRootViewControllerに指定する
@@ -492,6 +478,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
 }
