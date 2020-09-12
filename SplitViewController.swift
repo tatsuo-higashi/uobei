@@ -14,7 +14,7 @@ struct Section2 {
 extension Section2 {
     static func make() -> [Section] {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        switch appDelegate.viewSetting{
+        switch appDelegate.viewType{
             case "アカウント":
                 return[Section(title: "アカウント", items: ["席番号", "到着時間"])]//sections[0].count=1
             case "二次元コード":
@@ -102,7 +102,7 @@ class SplitViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         pickerView2.selectRow(appDelegate.pickerView2Ini, inComponent: 0, animated: true)
         
         
-        if appDelegate.viewSetting == "年代別来店割合" || appDelegate.viewSetting == "年代別平均皿数"{
+        if appDelegate.viewType == "年代別来店割合" || appDelegate.viewType == "年代別平均皿数"{
             // フォントサイズ
             label.font = UIFont.systemFont(ofSize: 60)
             // テキストを中央寄せにする
@@ -182,7 +182,7 @@ extension SplitViewController: UITableViewDataSource {
         if cell.accessoryView == nil {
         }
       
-        if appDelegate.viewSetting == "アカウント" {
+        if appDelegate.viewType == "アカウント" {
             if indexPath.row == 0{
                 cell.accessoryView = UISwitch()
             }
@@ -190,7 +190,7 @@ extension SplitViewController: UITableViewDataSource {
                 cell.accessoryView = UISwitch()
             }
         }
-        if appDelegate.viewSetting == "二次元コード" {
+        if appDelegate.viewType == "二次元コード" {
             if indexPath.row == 0{
                 // UISwitch値が変更された時に呼び出すメソッドの設定
                 let testSwitch:UISwitch = UISwitch()
@@ -218,7 +218,7 @@ extension SplitViewController: UITableViewDataSource {
                 cell.accessoryView = testSwitch
             }
         }
-        if appDelegate.viewSetting == "サウンド" {
+        if appDelegate.viewType == "サウンド" {
             if indexPath.section==0 && indexPath.row == 0{
                 cell.accessoryView = pickerView1
             }
@@ -268,7 +268,7 @@ extension SplitViewController: UITableViewDataSource {
         }
     
         
-        if appDelegate.viewSetting == "年代別来店割合"{
+        if appDelegate.viewType == "年代別来店割合"{
             let realm = try! Realm()
             let label = makeLabel()
             let results = realm.objects(allData.self)
@@ -311,7 +311,7 @@ extension SplitViewController: UITableViewDataSource {
             view.addSubview(pieChartView)
         }
         
-        if appDelegate.viewSetting == "年代別平均皿数"{
+        if appDelegate.viewType == "年代別平均皿数"{
             let realm = try! Realm()
             let label = makeLabel()
             let results = realm.objects(allData.self)
@@ -364,7 +364,7 @@ extension SplitViewController: UITableViewDataSource {
             view.addSubview(pieChartView)
         }
         let label = makeLabel()//o:border,o1:backgrand,o2:0でalpha無効,ic:300でむテキスト無効
-        if appDelegate.viewSetting == "realm" {
+        if appDelegate.viewType == "realm" {
             let realm = try! Realm()
             let obj = realm.objects(guestData.self).last
             if indexPath.section==0 && indexPath.row == 0{
