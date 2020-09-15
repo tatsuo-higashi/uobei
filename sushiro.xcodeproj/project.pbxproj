@@ -1,0 +1,591 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		33330F922510906C00EC7320 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33330F912510906C00EC7320 /* AppDelegate.swift */; };
+		33330F942510906C00EC7320 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33330F932510906C00EC7320 /* ViewController.swift */; };
+		33330F972510906C00EC7320 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33330F952510906C00EC7320 /* Main.storyboard */; };
+		33330F992510907C00EC7320 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33330F982510907C00EC7320 /* Assets.xcassets */; };
+		33330F9C2510907C00EC7320 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33330F9A2510907C00EC7320 /* LaunchScreen.storyboard */; };
+		33330FA72510907C00EC7320 /* sushiroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33330FA62510907C00EC7320 /* sushiroTests.swift */; };
+		33330FB22510907C00EC7320 /* sushiroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33330FB12510907C00EC7320 /* sushiroUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		33330FA32510907C00EC7320 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33330F862510906C00EC7320 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33330F8D2510906C00EC7320;
+			remoteInfo = sushiro;
+		};
+		33330FAE2510907C00EC7320 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33330F862510906C00EC7320 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33330F8D2510906C00EC7320;
+			remoteInfo = sushiro;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		33330F8E2510906C00EC7320 /* sushiro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sushiro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		33330F912510906C00EC7320 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		33330F932510906C00EC7320 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		33330F962510906C00EC7320 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		33330F982510907C00EC7320 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		33330F9B2510907C00EC7320 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		33330F9D2510907C00EC7320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33330FA22510907C00EC7320 /* sushiroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sushiroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		33330FA62510907C00EC7320 /* sushiroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sushiroTests.swift; sourceTree = "<group>"; };
+		33330FA82510907C00EC7320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33330FAD2510907C00EC7320 /* sushiroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sushiroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		33330FB12510907C00EC7320 /* sushiroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sushiroUITests.swift; sourceTree = "<group>"; };
+		33330FB32510907C00EC7320 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		33330F8B2510906C00EC7320 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33330F9F2510907C00EC7320 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33330FAA2510907C00EC7320 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		33330F852510906C00EC7320 = {
+			isa = PBXGroup;
+			children = (
+				33330F902510906C00EC7320 /* sushiro */,
+				33330FA52510907C00EC7320 /* sushiroTests */,
+				33330FB02510907C00EC7320 /* sushiroUITests */,
+				33330F8F2510906C00EC7320 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		33330F8F2510906C00EC7320 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				33330F8E2510906C00EC7320 /* sushiro.app */,
+				33330FA22510907C00EC7320 /* sushiroTests.xctest */,
+				33330FAD2510907C00EC7320 /* sushiroUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		33330F902510906C00EC7320 /* sushiro */ = {
+			isa = PBXGroup;
+			children = (
+				33330F912510906C00EC7320 /* AppDelegate.swift */,
+				33330F932510906C00EC7320 /* ViewController.swift */,
+				33330F952510906C00EC7320 /* Main.storyboard */,
+				33330F982510907C00EC7320 /* Assets.xcassets */,
+				33330F9A2510907C00EC7320 /* LaunchScreen.storyboard */,
+				33330F9D2510907C00EC7320 /* Info.plist */,
+			);
+			path = sushiro;
+			sourceTree = "<group>";
+		};
+		33330FA52510907C00EC7320 /* sushiroTests */ = {
+			isa = PBXGroup;
+			children = (
+				33330FA62510907C00EC7320 /* sushiroTests.swift */,
+				33330FA82510907C00EC7320 /* Info.plist */,
+			);
+			path = sushiroTests;
+			sourceTree = "<group>";
+		};
+		33330FB02510907C00EC7320 /* sushiroUITests */ = {
+			isa = PBXGroup;
+			children = (
+				33330FB12510907C00EC7320 /* sushiroUITests.swift */,
+				33330FB32510907C00EC7320 /* Info.plist */,
+			);
+			path = sushiroUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		33330F8D2510906C00EC7320 /* sushiro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33330FB62510907C00EC7320 /* Build configuration list for PBXNativeTarget "sushiro" */;
+			buildPhases = (
+				33330F8A2510906C00EC7320 /* Sources */,
+				33330F8B2510906C00EC7320 /* Frameworks */,
+				33330F8C2510906C00EC7320 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = sushiro;
+			productName = sushiro;
+			productReference = 33330F8E2510906C00EC7320 /* sushiro.app */;
+			productType = "com.apple.product-type.application";
+		};
+		33330FA12510907C00EC7320 /* sushiroTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33330FB92510907C00EC7320 /* Build configuration list for PBXNativeTarget "sushiroTests" */;
+			buildPhases = (
+				33330F9E2510907C00EC7320 /* Sources */,
+				33330F9F2510907C00EC7320 /* Frameworks */,
+				33330FA02510907C00EC7320 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				33330FA42510907C00EC7320 /* PBXTargetDependency */,
+			);
+			name = sushiroTests;
+			productName = sushiroTests;
+			productReference = 33330FA22510907C00EC7320 /* sushiroTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		33330FAC2510907C00EC7320 /* sushiroUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33330FBC2510907C00EC7320 /* Build configuration list for PBXNativeTarget "sushiroUITests" */;
+			buildPhases = (
+				33330FA92510907C00EC7320 /* Sources */,
+				33330FAA2510907C00EC7320 /* Frameworks */,
+				33330FAB2510907C00EC7320 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				33330FAF2510907C00EC7320 /* PBXTargetDependency */,
+			);
+			name = sushiroUITests;
+			productName = sushiroUITests;
+			productReference = 33330FAD2510907C00EC7320 /* sushiroUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		33330F862510906C00EC7320 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "東竜生";
+				TargetAttributes = {
+					33330F8D2510906C00EC7320 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					33330FA12510907C00EC7320 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 33330F8D2510906C00EC7320;
+					};
+					33330FAC2510907C00EC7320 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 33330F8D2510906C00EC7320;
+					};
+				};
+			};
+			buildConfigurationList = 33330F892510906C00EC7320 /* Build configuration list for PBXProject "sushiro" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 33330F852510906C00EC7320;
+			productRefGroup = 33330F8F2510906C00EC7320 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				33330F8D2510906C00EC7320 /* sushiro */,
+				33330FA12510907C00EC7320 /* sushiroTests */,
+				33330FAC2510907C00EC7320 /* sushiroUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		33330F8C2510906C00EC7320 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33330F9C2510907C00EC7320 /* LaunchScreen.storyboard in Resources */,
+				33330F992510907C00EC7320 /* Assets.xcassets in Resources */,
+				33330F972510906C00EC7320 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33330FA02510907C00EC7320 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33330FAB2510907C00EC7320 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		33330F8A2510906C00EC7320 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33330F942510906C00EC7320 /* ViewController.swift in Sources */,
+				33330F922510906C00EC7320 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33330F9E2510907C00EC7320 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33330FA72510907C00EC7320 /* sushiroTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33330FA92510907C00EC7320 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33330FB22510907C00EC7320 /* sushiroUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		33330FA42510907C00EC7320 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 33330F8D2510906C00EC7320 /* sushiro */;
+			targetProxy = 33330FA32510907C00EC7320 /* PBXContainerItemProxy */;
+		};
+		33330FAF2510907C00EC7320 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 33330F8D2510906C00EC7320 /* sushiro */;
+			targetProxy = 33330FAE2510907C00EC7320 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		33330F952510906C00EC7320 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				33330F962510906C00EC7320 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		33330F9A2510907C00EC7320 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				33330F9B2510907C00EC7320 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		33330FB42510907C00EC7320 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		33330FB52510907C00EC7320 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		33330FB72510907C00EC7320 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN9WLUA379;
+				INFOPLIST_FILE = sushiro/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.sushiro";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		33330FB82510907C00EC7320 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN9WLUA379;
+				INFOPLIST_FILE = sushiro/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.sushiro";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		33330FBA2510907C00EC7320 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN9WLUA379;
+				INFOPLIST_FILE = sushiroTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.sushiroTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sushiro.app/sushiro";
+			};
+			name = Debug;
+		};
+		33330FBB2510907C00EC7320 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN9WLUA379;
+				INFOPLIST_FILE = sushiroTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.sushiroTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sushiro.app/sushiro";
+			};
+			name = Release;
+		};
+		33330FBD2510907C00EC7320 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN9WLUA379;
+				INFOPLIST_FILE = sushiroUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.sushiroUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = sushiro;
+			};
+			name = Debug;
+		};
+		33330FBE2510907C00EC7320 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PN9WLUA379;
+				INFOPLIST_FILE = sushiroUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-.sushiroUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = sushiro;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		33330F892510906C00EC7320 /* Build configuration list for PBXProject "sushiro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33330FB42510907C00EC7320 /* Debug */,
+				33330FB52510907C00EC7320 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33330FB62510907C00EC7320 /* Build configuration list for PBXNativeTarget "sushiro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33330FB72510907C00EC7320 /* Debug */,
+				33330FB82510907C00EC7320 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33330FB92510907C00EC7320 /* Build configuration list for PBXNativeTarget "sushiroTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33330FBA2510907C00EC7320 /* Debug */,
+				33330FBB2510907C00EC7320 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33330FBC2510907C00EC7320 /* Build configuration list for PBXNativeTarget "sushiroUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33330FBD2510907C00EC7320 /* Debug */,
+				33330FBE2510907C00EC7320 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 33330F862510906C00EC7320 /* Project object */;
+}
